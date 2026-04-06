@@ -1,0 +1,34 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# PowerShell
+*.ps1xml
+*.psc1
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# OpenCode / AI
+*.opencode.json.lock
+.qwen_sys.md.bak
+qwen_progress.md
+
+# Secrets
+.env
+*.env.local
+*.env.production
+
+# IDE
+.vscode/
+.idea/
