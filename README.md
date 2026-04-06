@@ -425,7 +425,7 @@ fonctionnalités. Si vous avez besoin d'une version encore plus légère, utilis
 2. Créez une branche : `git checkout -b feat/ma-fonctionnalite`
 3. Committez : `git commit -m "feat: ajout de [description]"`
 4. Poussez : `git push origin feat/ma-fonctionnalite`
-5. Ouvrez une Pull Request vers `develop`
+5. Ouvrez une Pull Request vers `dev`
 
 Voir la section [Contribuer](#-contribuer) pour les détails.
 
@@ -449,7 +449,7 @@ comprendre les hacks dans leur contexte Claude Code original.
 ```
 main          ← Branche de production (stable, taguée)
   │
-  └── develop  ← Branche d'intégration (prochaine version)
+  └── dev  ← Branche d'intégration (prochaine version)
         │
         ├── feat/add-webhook-alerts    ← Nouvelle fonctionnalité
         ├── fix/token-count-overflow   ← Correction de bug
@@ -459,9 +459,9 @@ main          ← Branche de production (stable, taguée)
 ### Workflow de Contribution
 
 1. **Forker** le dépôt depuis GitHub
-2. **Créer une branche** depuis `develop` :
+2. **Créer une branche** depuis `dev` :
    ```powershell
-   git checkout develop
+   git checkout dev
    git checkout -b feat/ma-nouvelle-fonctionnalite
    ```
 3. **Commiter** avec un message conventionnel :
@@ -472,7 +472,7 @@ main          ← Branche de production (stable, taguée)
    ```powershell
    git push origin feat/ma-nouvelle-fonctionnalite
    ```
-5. **Ouvrir une Pull Request** vers `develop` via `gh pr create` ou l'interface GitHub
+5. **Ouvrir une Pull Request** vers `dev` via `gh pr create` ou l'interface GitHub
 
 ### Conventions de Commit
 
