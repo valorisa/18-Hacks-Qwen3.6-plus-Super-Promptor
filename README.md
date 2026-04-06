@@ -184,6 +184,22 @@ Copy-Item config/opencode/opencode.json.example config/opencode/opencode.json
 
 ## ⚙️ Configuration
 
+### Architecture des Fichiers
+
+| Fichier | Rôle | Portée |
+|---------|------|--------|
+| `~/.config/opencode/AGENTS.md` | 18 hacks d'optimisation tokens | **Toujours actif** dans toutes les sessions |
+| `~/.config/opencode/commands/promptor.md` | Promptor (expert prompt engineering) | Actif via `/promptor` |
+| `~/.config/opencode/opencode.json` | Provider + modèle par défaut | Configuration globale |
+
+### Installation de la Configuration Globale
+
+```powershell
+# Copier les fichiers de config vers le dossier global d'OpenCode
+Copy-Item config/opencode/AGENTS.md $env:USERPROFILE\.config\opencode\AGENTS.md
+Copy-Item config/opencode/commands/promptor.md $env:USERPROFILE\.config\opencode\commands\promptor.md -Force
+```
+
 ### Fichier `.env` (Variables Personnalisées)
 
 Copiez `.env.example` vers `.env` et renseignez votre clé API :
@@ -233,34 +249,30 @@ QWEN_DEBUG_TOKEN_USAGE=false
 
 ## 🎯 Utilisation Quotidienne
 
-### Méthode Recommandée : Slash Command `/promptor`
-
-Si votre version d'OpenCode supporte les commandes personnalisées :
+### Workflow Typique
 
 ```powershell
 # Lancer OpenCode
 opencode
+```
 
-# Dans le chat, tapez :
+Les 18 hacks sont **toujours actifs** (via `~/.config/opencode/AGENTS.md`).
+
+Pour utiliser Promptor (création de prompts sur-mesure) :
+
+```
 /promptor
 ```
 
-### Méthode Alternative : Référence de Fichier
-
-Si `/promptor` n'est pas disponible :
-
-```
-@~/.config/opencode/.promptor_starter.md
-```
-
-### Workflow Typique
+### Étapes d'Utilisation
 
 1. Lancez `opencode` dans votre projet
-2. Activez Promptor via `/promptor` ou `@.promptor_starter.md`
-3. Décrivez votre besoin en langage naturel
-4. Promptor génère un prompt optimisé appliquant les hacks pertinents
-5. Copiez le prompt dans l'outil IA cible
-6. Itérez jusqu'à obtenir un prompt 5 étoiles
+2. Les 18 hacks sont automatiquement appliqués dans chaque session
+3. Tapez `/promptor` pour créer un prompt optimisé pour un outil IA cible
+4. Décrivez votre besoin en langage naturel
+5. Promptor génère un prompt optimisé appliquant les hacks pertinents
+6. Copiez le prompt dans l'outil IA cible
+7. Itérez jusqu'à obtenir un prompt 5 étoiles
 
 ---
 
@@ -341,8 +353,8 @@ Promptor applique systématiquement les hacks suivants lors de la génération d
 
 | Symptôme | Cause Probable | Solution |
 |----------|---------------|----------|
-| `/promptor` n'apparaît pas | Version OpenCode ne supporte pas les slash commands | Utiliser `@~/.config/opencode/.promptor_starter.md` |
-| La commande s'écrit mais ne s'exécute pas | Espace manquant après la référence | Taper `@fichier{ESPACE}{ENTRÉE}` pour valider |
+| `/promptor` n'apparaît pas | Fichier `promptor.md` absent du dossier `commands/` | Vérifier `~/.config/opencode/commands/promptor.md` |
+| Les hacks ne sont pas appliqués | Fichier `AGENTS.md` absent | Vérifier `~/.config/opencode/AGENTS.md` |
 | `Unrecognized key: "commands"` | JSON config invalide | Lancer `scripts/Fix-OpenCodeConfig.ps1` |
 
 ### Consommation de tokens toujours élevée
