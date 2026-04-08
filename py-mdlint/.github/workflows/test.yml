@@ -1,0 +1,44 @@
+# .github/workflows/test.yml
+name: Run Tests
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'pyproject.toml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - 'pyproject.toml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11', '3.12']
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: pip install -e .[dev,yaml,watch]
+      
+      - name: Run pytest
+        run: pytest -v --tb=short --cov=py_mdlint --cov-report=term-missing
+      
+      - name: Type check with mypy
+        run: mypy src/py_mdlint
+      
+      - name: Lint code with ruff
+        run: ruff check src/ tests/

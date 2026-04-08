@@ -1,0 +1,1 @@
+{"hash": "45d1d88c1b37a6c10d549f48da2a1887", "tokens": [{"type": "fence", "tag": "code", "content": "$ ls\n", "line_number": 1, "column": 1, "level": 0, "attrs": {}, "meta": {"original_line": "```bash", "indent": 0, "fence_char": "b", "info": "bash"}}]}
