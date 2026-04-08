@@ -1,8 +1,16 @@
 # src/py_mdlint/utils/colors.py
-"""Palette de couleurs sobres avec support NO_COLOR."""
+"""Palette de couleurs sobres avec support NO_COLOR et Windows."""
 
 import os
 import sys
+
+_COLORAMA_AVAILABLE = False
+try:
+    import colorama
+    colorama.init(strip=False)
+    _COLORAMA_AVAILABLE = True
+except ImportError:
+    pass
 
 
 class Colors:
@@ -17,7 +25,11 @@ class Colors:
     @classmethod
     def enabled(cls) -> bool:
         """Vérifie si les couleurs doivent être affichées."""
-        return not os.getenv("NO_COLOR") and sys.stdout.isatty()
+        if os.getenv("NO_COLOR"):
+            return False
+        if sys.platform == "win32":
+            return _COLORAMA_AVAILABLE and os.getenv("WT_SESSION") is not None
+        return sys.stdout.isatty()
     
     @classmethod
     def wrap(cls, color: str, text: str) -> str:

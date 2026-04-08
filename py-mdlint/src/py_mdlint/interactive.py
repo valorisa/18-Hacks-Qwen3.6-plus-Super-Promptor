@@ -17,24 +17,25 @@ class InteractiveMenu:
     
     def render_box(self, title: str, options: list[tuple[str, str]]) -> None:
         """Affiche une boîte de menu avec bordures cyan."""
-        width = max(len(title), max(len(opt[1]) for opt in options)) + 4
+        title_len = len(title)
+        option_len = max(len(f"  {k}. {v}") for k, v in options)
+        width = max(title_len, option_len) + 6
         
-        print(Colors.border("╔" + "═" * (width - 2) + "╗"))
-        print(Colors.border("║") + Colors.title(f" {title:^{width-4}} ") + Colors.border("║"))
-        print(Colors.border("╠" + "═" * (width - 2) + "╣"))
+        print(Colors.border("+" + "-" * (width - 2) + "+"))
+        print(Colors.border("|") + f" {title} ".center(width - 2) + Colors.border("|"))
+        print(Colors.border("+" + "-" * (width - 2) + "+"))
         
         for key, label in options:
-            line = f"  {Colors.title(key)}. {Colors.text(label)}"
-            padding = " " * (width - 2 - len(line) + 4)
-            print(Colors.border("║") + line + padding + Colors.border("║"))
+            line = f"  {key}. {label}"
+            print(Colors.border("|") + line.ljust(width - 2) + Colors.border("|"))
         
-        print(Colors.border("╚" + "═" * (width - 2) + "╝"))
+        print(Colors.border("+" + "-" * (width - 2) + "+"))
     
     def get_choice(self, prompt: str, valid: list[str], default: str = None) -> Optional[str]:
         """Demande un choix valide avec retry."""
         while True:
             try:
-                user_input = input(Colors.text(f"{prompt}")).strip()
+                user_input = input(prompt).strip()
 
                 if not user_input and default is not None:
                     return default
@@ -43,11 +44,10 @@ class InteractiveMenu:
                 if user_input in valid:
                     return user_input
 
-                icon = "!" if not Reporter._use_emoji else "⚠️"
-                print(Colors.warning(f"{icon}  Choix invalide. Options: {', '.join(valid)}"))
+                print(f"!  Choix invalide. Options: {', '.join(valid)}")
             except KeyboardInterrupt:
-                icon = "!" if not Reporter._use_emoji else "⚠️"
-                print(f"\n{Colors.warning(f'{icon}  Interruption. Tapez 6 pour quitter ou Ctrl+C pour forcer.')}")
+                print(f"\nInterruption. Tapez 6 pour quitter.")
+                return "6"
     
     def screen_home(self) -> Optional[str]:
         """Écran 1 — Accueil."""
@@ -64,7 +64,7 @@ class InteractiveMenu:
     
     def screen_lint(self) -> dict:
         """Écran 2 — Linter un fichier/dossier."""
-        print(f"\n{Colors.title('📁 Linter un fichier ou dossier')}")
+        print(f"\n--- Linter un fichier ou dossier ---")
         
         path = self.get_choice("Chemin du fichier ou dossier [défaut: .] : ", [], default=".")
         config = self.get_choice("Fichier de config [défaut: .markdownlint.json] : ", [], default=".markdownlint.json")
@@ -81,7 +81,7 @@ class InteractiveMenu:
     
     def screen_create_config(self) -> dict:
         """Écran 3 — Créer un fichier de config."""
-        print(f"\n{Colors.title('📝 Configuration interactive')}")
+        print(f"\n--- Configuration interactive ---")
         
         config = {}
         
@@ -120,19 +120,19 @@ class InteractiveMenu:
         from .registry import load_rules
         
         rules = load_rules()
-        print(f"\n{Colors.title(f'📋 Règles disponibles ({len(rules)} actives)')}:\n")
+        print(f"\n--- Regles disponibles ({len(rules)} actives) ---\n")
         
         for rule_id in sorted(rules.keys()):
             rule = rules[rule_id]
             fixable = "oui" if rule.fixable else "non"
             print(f"  {Colors.title(rule_id):<6} {rule.alias:<25} [fixable: {fixable}]  {rule.description[:50]}...")
         
-        print(f"\n{Colors.text('Taper un numéro de règle pour le détail, ou [q] pour quitter : ')}")
+        print(f"\nTaper un numero de regle pour le detail, ou [q] pour quitter : ")
         # Simplifié : retour direct au menu principal
     
     def screen_fix(self) -> dict:
         """Écran 5 — Linter + corriger."""
-        print(f"\n{Colors.title('🔧 Linter + corriger automatiquement')}")
+        print(f"\n--- Linter + corriger automatiquement ---")
         
         path = self.get_choice("Chemin [défaut: .] : ", [], default=".")
         
@@ -154,7 +154,7 @@ class InteractiveMenu:
     
     def screen_github_workflow(self) -> dict:
         """Écran 6 — Générer GitHub Actions."""
-        print(f"\n{Colors.title('📂 Générer un workflow GitHub Actions')}")
+        print(f"\n--- Generer un workflow GitHub Actions ---")
         
         project_dir = self.get_choice("Dossier du projet [défaut: .] : ", [], default=".")
         
@@ -167,7 +167,7 @@ class InteractiveMenu:
             
             if choice == "1":
                 params = self.screen_lint()
-                print(f"\n{Colors.text('→ Analyse en cours...')}")
+                print("\n> Analyse en cours...")
                 # Ici: appeler le linter avec params
                 icon_ok = "OK" if Reporter._use_emoji else "[OK]"
                 icon_fail = "!" if not Reporter._use_emoji else "X"
@@ -201,5 +201,5 @@ class InteractiveMenu:
             
             # Pause avant retour au menu
             if self.running:
-                input(f"\n{Colors.text('Appuyez sur Entrée pour continuer...')}")
+                input("\nAppuyez sur Entree pour continuer...")
                 print("\n" + "-" * 40 + "\n")
