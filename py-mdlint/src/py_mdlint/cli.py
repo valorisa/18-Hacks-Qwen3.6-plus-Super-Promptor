@@ -81,7 +81,8 @@ def run_linter(
                 all_violations.append(v)
 
         except Exception as e:
-            print(Colors.warning(f"⚠️  Erreur sur {file_path}: {e}"), file=sys.stderr)
+            error_msg = f"ERROR on {file_path}: {type(e).__name__}"
+            print(error_msg, file=sys.stderr)
             return 2
 
     if report_format == "console":
@@ -137,7 +138,8 @@ jobs:
     workflow_path = Path(project_dir) / ".github" / "workflows" / "mdlint-check.yml"
     workflow_path.parent.mkdir(parents=True, exist_ok=True)
     workflow_path.write_text(workflow_content, encoding="utf-8")
-    print(Colors.success(f"✅ {workflow_path} créé !"))
+    icon = "OK" if Reporter._use_emoji else "[OK]"
+    print(Colors.success(f"{icon} {workflow_path} cree !"))
 
 
 def main() -> int:
@@ -197,12 +199,14 @@ def main() -> int:
             except KeyboardInterrupt:
                 observer.stop()
                 observer.join()
-                print(f"\n{Colors.success('👋 Surveillance arrêtée')}")
+                icon = "!" if Reporter._use_emoji else ">"
+                print(f"\n{Colors.success(f'{icon} Surveillance arretee')}")
                 return 0
                 
         except ImportError:
+            icon = "!" if not Reporter._use_emoji else "⚠️"
             print(Colors.warning(
-                "⚠️  Mode --watch nécessite 'watchdog'.\n"
+                f"{icon}  Mode --watch necessite 'watchdog'.\n"
                 "Installez avec: pip install py-mdlint[watch]"
             ), file=sys.stderr)
             return 2

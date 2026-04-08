@@ -5,6 +5,7 @@ import time
 from pathlib import Path
 from typing import Callable, Optional
 
+from .reporter import Reporter
 from .utils.colors import Colors
 
 
@@ -48,10 +49,12 @@ class MarkdownEventHandler(FileSystemEventHandler):
         
         # Exécuter le callback (lint)
         try:
-            print(f"\n{Colors.title('🔄')} Changement détecté: {path}")
+            icon = ">" if not Reporter._use_emoji else ">"
+            print(f"\n{Colors.title(f'{icon} Changement detecte: {path}')}")
             self.callback(path)
         except Exception as e:
-            print(f"{Colors.warning(f'⚠️  Erreur: {e}')}")
+            icon = "!" if not Reporter._use_emoji else "⚠️"
+            print(f"{Colors.warning(f'{icon}  Erreur: {e}')}")
 
 
 def start_watch(
@@ -82,7 +85,9 @@ def start_watch(
     observer.schedule(handler, str(path), recursive=recursive)
     observer.start()
     
-    print(f"{Colors.success('✅')} Surveillance active sur {path}")
-    print(f"{Colors.text('💡')} Appuyez sur Ctrl+C pour arrêter\n")
+    icon_ok = "OK" if Reporter._use_emoji else "[OK]"
+    icon_info = "i" if not Reporter._use_emoji else "💡"
+    print(f"{Colors.success(f'{icon_ok}')} Surveillance active sur {path}")
+    print(f"{Colors.text(f'{icon_info}')} Appuyez sur Ctrl+C pour arreter\n")
     
     return observer

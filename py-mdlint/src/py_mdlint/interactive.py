@@ -5,6 +5,7 @@ import sys
 from pathlib import Path
 from typing import Optional
 
+from .reporter import Reporter
 from .utils.colors import Colors
 
 
@@ -42,9 +43,11 @@ class InteractiveMenu:
                 if user_input in valid:
                     return user_input
 
-                print(Colors.warning(f"⚠️  Choix invalide. Options: {', '.join(valid)}"))
+                icon = "!" if not Reporter._use_emoji else "⚠️"
+                print(Colors.warning(f"{icon}  Choix invalide. Options: {', '.join(valid)}"))
             except KeyboardInterrupt:
-                print(f"\n{Colors.warning('⚠️  Interruption. Tapez 6 pour quitter ou Ctrl+C pour forcer.')}")
+                icon = "!" if not Reporter._use_emoji else "⚠️"
+                print(f"\n{Colors.warning(f'{icon}  Interruption. Tapez 6 pour quitter ou Ctrl+C pour forcer.')}")
     
     def screen_home(self) -> Optional[str]:
         """Écran 1 — Accueil."""
@@ -138,7 +141,8 @@ class InteractiveMenu:
                         "MD023", "MD027", "MD028", "MD037", "MD038", "MD039", "MD047",
                         "MD049", "MD050", "MD055", "MD056", "MD058", "MD060", "MD004", "MD007"]
         
-        print(f"{Colors.warning('⚠️  Règles auto-fixables disponibles :')}")
+        icon = "!" if not Reporter._use_emoji else "⚠️"
+        print(Colors.warning(f"{icon}  Regles auto-fixables disponibles :"))
         print(f"   {', '.join(fixable_rules[:10])}{'...' if len(fixable_rules) > 10 else ''}")
         
         confirm = self.get_choice("Continuer ? [Y/n] : ", ["y", "Y", "n", "N", ""], default="Y")
@@ -165,12 +169,15 @@ class InteractiveMenu:
                 params = self.screen_lint()
                 print(f"\n{Colors.text('→ Analyse en cours...')}")
                 # Ici: appeler le linter avec params
-                print(Colors.success("✅ Simulation: 47 règles passées | ❌ 6 violations trouvées"))
+                icon_ok = "OK" if Reporter._use_emoji else "[OK]"
+                icon_fail = "!" if not Reporter._use_emoji else "X"
+                print(Colors.success(f"{icon_ok} Simulation: 47 regles passees | {icon_fail} 6 violations trouvees"))
             
             elif choice == "2":
                 config = self.screen_create_config()
                 # Ici: écrire .markdownlint.json
-                print(Colors.success("✅ .markdownlint.json créé !"))
+                icon_ok = "OK" if Reporter._use_emoji else "[OK]"
+                print(Colors.success(f"{icon_ok} .markdownlint.json cree !"))
             
             elif choice == "3":
                 self.screen_list_rules()
@@ -178,15 +185,18 @@ class InteractiveMenu:
             elif choice == "4":
                 params = self.screen_fix()
                 if params["apply"]:
-                    print(Colors.success("✅ 12 violations corrigées | 3 nécessitent correction manuelle"))
+                    icon_ok = "OK" if Reporter._use_emoji else "[OK]"
+                    print(Colors.success(f"{icon_ok} 12 violations corrigees | 3 necessitent correction manuelle"))
             
             elif choice == "5":
                 params = self.screen_github_workflow()
                 # Ici: générer .github/workflows/mdlint-check.yml
-                print(Colors.success("✅ .github/workflows/mdlint-check.yml créé !"))
+                icon_ok = "OK" if Reporter._use_emoji else "[OK]"
+                print(Colors.success(f"{icon_ok} .github/workflows/mdlint-check.yml cree !"))
             
             elif choice == "6":
-                print(f"\n{Colors.success('👋 Au revoir !')}")
+                icon = "!" if Reporter._use_emoji else ">"
+                print(f"\n{Colors.success(f'{icon} Au revoir !')}")
                 self.running = False
             
             # Pause avant retour au menu
