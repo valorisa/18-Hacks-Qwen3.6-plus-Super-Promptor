@@ -1,0 +1,1 @@
+{"hash": "c2baef454428b5cbb625bd60567a75c6", "tokens": [{"type": "fence", "tag": "code", "content": "$ ls\nfile1.txt file2.txt\n", "line_number": 1, "column": 1, "level": 0, "attrs": {}, "meta": {"original_line": "```bash", "indent": 0, "fence_char": "b", "info": "bash"}}]}
