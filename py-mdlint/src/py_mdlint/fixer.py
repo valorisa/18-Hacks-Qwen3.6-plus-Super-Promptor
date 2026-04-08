@@ -1,13 +1,14 @@
 # src/py_mdlint/fixer.py
 """Orchestrateur pour le mode --fix (idempotent, support Patch)."""
 
+import re
 from .rules.base import Rule, Violation, Patch
 
 
 class Fixer:
     """Applique les corrections auto-fixables de manière idempotente."""
 
-    def __init__(self, rules: dict[str, Rule]):
+    def __init__(self, rules: dict[str, Rule]) -> None:
         self.rules = rules
 
     def apply_fixes(
@@ -15,9 +16,7 @@ class Fixer:
         violations: list[Violation],
         lines: list[str]
     ) -> tuple[list[str], int]:
-        """
-        Applique les corrections sur les lignes via le système Patch.
-        """
+        """Applique les corrections sur les lignes via le système Patch."""
         patches: list[Patch] = []
         for v in violations:
             if v.patch:
@@ -52,11 +51,7 @@ class Fixer:
         violations: list[Violation],
         content: str,
     ) -> tuple[str, int]:
-        """
-        Applique les corrections globales (MD012, MD047).
-        """
-        import re
-
+        """Applique les corrections globales (MD012, MD047)."""
         fixed_count = 0
 
         if any(v.rule_id == "MD047" for v in violations):
@@ -71,4 +66,5 @@ class Fixer:
         return content, fixed_count
 
     def is_idempotent(self, original: list[str], fixed: list[str]) -> bool:
+        """Vérifie si la correction est idempotente."""
         return original != fixed
