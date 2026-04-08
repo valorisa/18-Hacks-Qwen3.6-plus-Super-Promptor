@@ -36,14 +36,14 @@ pip install -e ".[dev,yaml,watch]"
 ```bash
 $ py-mdlint
 ╔══════════════════════════════════╗
-║  py-mdlint — Markdown Linter   ║
+║  py-mdlint — Markdown Linter     ║
 ╠══════════════════════════════════╣
-║  1. Linter un fichier/dossier   ║
-║  2. Créer un fichier de config  ║
-║  3. Voir les règles disponibles ║
-║  4. Linter + corriger           ║
-║  5. Générer workflow GitHub     ║
-║  6. Quitter                     ║
+║  1. Linter un fichier/dossier    ║
+║  2. Créer un fichier de config   ║
+║  3. Voir les règles disponibles  ║
+║  4. Linter + corriger            ║
+║  5. Générer workflow GitHub      ║
+║  6. Quitter                      ║
 ╚══════════════════════════════════╝
 ```
 
