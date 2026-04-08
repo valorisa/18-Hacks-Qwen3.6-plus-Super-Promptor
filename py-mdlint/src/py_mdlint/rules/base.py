@@ -3,10 +3,10 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import Literal, Optional
+from typing import Any, Literal, Optional
 
 
-@dataclass
+@dataclass(slots=True)
 class Token:
     """Token normalisé pour consommation par les règles."""
     type: str
@@ -15,12 +15,12 @@ class Token:
     line_number: int
     column: int
     level: int
-    attrs: dict[str, str]
-    children: list['Token']
+    attrs: dict[str, str] = field(default_factory=dict)
+    children: list['Token'] = field(default_factory=list)
     meta: dict = field(default_factory=dict)
 
 
-@dataclass
+@dataclass(slots=True)
 class Patch:
     """Opération atomique pour correction de fichier."""
     type: Literal["insert", "delete", "replace"]
@@ -29,7 +29,7 @@ class Patch:
     old_content: Optional[str] = None
 
 
-@dataclass
+@dataclass(slots=True)
 class Violation:
     """Représente une violation de règle détectée."""
     rule_id: str
@@ -108,6 +108,6 @@ class Rule(ABC):
             return violation.fixed_line
         return lines[violation.line_number - 1]
     
-    def get_param(self, key: str, default=None):
+    def get_param(self, key: str, default: Any = None) -> Any:
         """Accès sécurisé aux paramètres de configuration."""
         return self.params.get(key, default)

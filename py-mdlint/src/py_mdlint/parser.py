@@ -5,7 +5,9 @@ import json
 import hashlib
 from pathlib import Path
 from typing import Optional
+
 from markdown_it import MarkdownIt
+
 from .rules.base import Token
 
 _md_parser = MarkdownIt("default", {"breaks": True, "html": True}).enable(["table", "strikethrough"])
@@ -13,6 +15,7 @@ CACHE_DIR = Path(".py-mdlint-cache")
 
 
 def _token_to_dict(token: Token) -> dict:
+    """Convertit un Token en dictionnaire pour le cache."""
     return {
         "type": token.type, "tag": token.tag, "content": token.content,
         "line_number": token.line_number, "column": token.column,
@@ -21,6 +24,7 @@ def _token_to_dict(token: Token) -> dict:
 
 
 def _dict_to_token(d: dict) -> Token:
+    """Convertit un dictionnaire cache en Token."""
     return Token(
         type=d["type"], tag=d["tag"], content=d["content"],
         line_number=d["line_number"], column=d["column"],
@@ -29,14 +33,7 @@ def _dict_to_token(d: dict) -> Token:
 
 
 def parse_markdown(content: str, use_cache: bool = True, source: Optional[str] = None) -> tuple[list[Token], list[str]]:
-    """
-    Parse Markdown en tokens normalisés avec cache optionnel.
-
-    Args:
-        content: Contenu Markdown brut
-        use_cache: Active/désactive le cache AST
-        source: Nom du fichier (pour logs/debug)
-    """
+    """Parse Markdown en tokens normalisés avec cache optionnel."""
     lines = content.splitlines(keepends=False)
 
     if not use_cache:
@@ -63,6 +60,7 @@ def parse_markdown(content: str, use_cache: bool = True, source: Optional[str] =
 
 
 def _parse_raw(content: str, lines: list[str]) -> tuple[list[Token], list[str]]:
+    """Parse raw content without cache."""
     raw_tokens = _md_parser.parse(content)
     tokens = []
     for token in raw_tokens:
@@ -81,4 +79,5 @@ def _parse_raw(content: str, lines: list[str]) -> tuple[list[Token], list[str]]:
 
 
 def get_heading_tokens(tokens: list[Token]) -> list[Token]:
+    """Filtre les tokens de type heading_open."""
     return [t for t in tokens if t.type == "heading_open"]
