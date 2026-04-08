@@ -32,3 +32,6 @@ qwen_progress.md
 # IDE
 .vscode/
 .idea/
+
+# Fichiers Digest
+digest.txt

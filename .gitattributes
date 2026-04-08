@@ -1,0 +1,12 @@
+# Fichiers texte : normaliser en LF dans Git, convertir en CRLF à la checkout sur Windows
+* text=auto
+
+# Fichiers Markdown spécifiques (optionnel, si tu veux forcer LF partout)
+*.md text eol=lf
+
+# Fichiers de config / scripts : garder LF pour compatibilité cross-platform
+*.sh text eol=lf
+*.ps1 text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
