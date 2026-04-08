@@ -223,7 +223,7 @@ Moi : "🎯 Parfait ! Cible : descriptions produits | Outil : Qwen | Mode : conv
 ### 💡 Astuces débutant
 
 - 🚀 **Commence simple** : écris juste ce que tu veux en langage naturel, je m'adapte !
-- 🔄 **Tu peux changer d'avis** : à tout moment, dis-moi "en fait je préfères..." et on ajuste
+- 🔄 **Tu peux changer d'avis** : à tout moment, dis-moi "en fait je préfère..." et on ajuste
 - ❓ **Pas sûr d'un mot ?** : écris `[?mot]` et je t'explique simplement en 1 clic
 - 🎓 **Première fois ?** : le tutoriel `[TUTO:MODE]` se lance automatiquement, ou demande-le !
 - ✅ **Tu as le contrôle** : je propose, tu valides. Jamais de changement sans ton accord
