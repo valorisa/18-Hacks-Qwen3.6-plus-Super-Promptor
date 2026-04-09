@@ -14,7 +14,7 @@
 - [🎬 Origine du Projet](#-origine-du-projet)
 - [❓ Pourquoi ce projet ?](#-pourquoi-ce-projet-)
 - [🔑 Concepts Clés](#-concepts-clés)
-- [📊 Le Problème : Coût Exponentiel des Tokens](#-le-problème-coût-exponentiel-des-tokens)
+- [📊 Le Problème : Coût Exponentiel des Tokens](#-le-problème--coût-exponentiel-des-tokens)
 - [✅ La Solution : Hygiène de Contexte + Promptor](#-la-solution-hygiène-de-contexte--promptor)
 - [🚀 Installation Rapide](#-installation-rapide)
 - [⚙️ Configuration](#️-configuration)
