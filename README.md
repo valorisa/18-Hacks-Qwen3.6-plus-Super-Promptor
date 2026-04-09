@@ -459,7 +459,7 @@ comprendre les hacks dans leur contexte Claude Code original.
 ### Stratégie de Branches
 
 ```text
-main          ← Branche de production (stable, taguée)
+main   ← Branche de production (stable, taguée)
   │
   └── dev  ← Branche d'intégration (prochaine version)
         │
