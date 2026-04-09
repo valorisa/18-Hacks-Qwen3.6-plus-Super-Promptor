@@ -12,7 +12,7 @@
 
 ## Composants principaux
 
-```
+```text
 src/py_mdlint/
 ├── cli.py          # Entry point + routing interactive/batch/watch
 ├── interactive.py  # Menu 6 écrans + couleurs sobres + NO_COLOR support
@@ -34,7 +34,7 @@ src/py_mdlint/
 
 ## Flux d'exécution
 
-```
+```text
 [CLI] → [Config] → [Parser] → [Registry.load_rules()]
        → [Rule.check() for each] → [Reporter.format()]
        → [Fixer.apply() if --fix] → [Output]
@@ -43,7 +43,7 @@ src/py_mdlint/
 ## Palette couleurs (sobres)
 
 | Usage | Code ANSI | Variable |
-|-------|-----------|----------|
+| ----- | --------- | -------- |
 | Bordures menu | `\033[96m` | `Colors.CYAN` |
 | Titres/numéros/succès | `\033[92m` | `Colors.GREEN` |
 | Texte courant | `\033[97m` | `Colors.WHITE` |
@@ -89,7 +89,7 @@ class MarkdownlintConfig(BaseModel):
 ## Roadmap v0.1→v1.0
 
 | Version | Objectif | Règles |
-|---------|----------|--------|
+| ------- | -------- | ------ |
 | v0.1.0-alpha | Squelette validable | Structure + MD001 exemple |
 | v0.2.0-beta | Top 10 règles fréquentes | MD001/003/009/012/022/025/031/032/047 + fixes |
 | v0.5.0-rc | 53 règles complètes | Toutes règles + tests + docs |
