@@ -71,16 +71,16 @@ class MarkdownlintConfig(BaseModel):
     - Paramètres par règle via clé MDXXX
     """
     default: bool = True
-    MD003: Optional[HeadingStyleConfig] = None
-    MD009: Optional[TrailingSpacesConfig] = None
-    MD012: Optional[MultipleBlanksConfig] = None
-    MD013: Optional[LineLengthConfig] = None
-    MD022: Optional[BlanksAroundHeadingsConfig] = None
-    MD025: Optional[SingleTitleConfig] = None
-    MD031: Optional[BlanksAroundFencesConfig] = None
-    MD033: Optional[HTMLConfig] = None
-    MD043: Optional[HeadingStructureConfig] = None
-    MD047: Optional[SingleTrailingNewlineConfig] = None
+    MD003: Optional[Union[bool, HeadingStyleConfig]] = True
+    MD009: Optional[Union[bool, TrailingSpacesConfig]] = True
+    MD012: Optional[Union[bool, MultipleBlanksConfig]] = True
+    MD013: Optional[Union[bool, LineLengthConfig]] = True
+    MD022: Optional[Union[bool, BlanksAroundHeadingsConfig]] = True
+    MD025: Optional[Union[bool, SingleTitleConfig]] = True
+    MD031: Optional[Union[bool, BlanksAroundFencesConfig]] = True
+    MD033: Optional[Union[bool, HTMLConfig]] = True
+    MD043: Optional[Union[bool, HeadingStructureConfig]] = True
+    MD047: Optional[Union[bool, SingleTrailingNewlineConfig]] = True
     
     @field_validator("*", mode="before")
     @classmethod
