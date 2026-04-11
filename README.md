@@ -14,13 +14,13 @@
 - [🎬 Origine du Projet](#-origine-du-projet)
 - [❓ Pourquoi ce projet ?](#-pourquoi-ce-projet-)
 - [🔑 Concepts Clés](#-concepts-clés)
-- [📊 Le Problème : Coût Exponentiel des Tokens](#-le-problème-coût-exponentiel-des-tokens)
-- [✅ La Solution : Hygiène de Contexte + Promptor](#-la-solution-hygiène-de-contexte--promptor)
+- [📊 Le Problème : Coût Exponentiel des Tokens](#-le-problème--coût-exponentiel-des-tokens)
+- [✅ La Solution : Hygiène de Contexte + Promptor](#-la-solution--hygiène-de-contexte--promptor)
 - [🚀 Installation Rapide](#-installation-rapide)
 - [⚙️ Configuration](#️-configuration)
 - [🎯 Utilisation Quotidienne](#-utilisation-quotidienne)
 - [📚 Les 18 Hacks Détaillés](#-les-18-hacks-détaillés)
-- [🤖 Promptor : Votre Assistant de Création de Prompts](#-promptor-votre-assistant-de-création-de-prompts)
+- [🤖 Promptor : Votre Assistant de Création de Prompts](#-promptor--votre-assistant-de-création-de-prompts)
 - [🔍 Dépannage](#-dépannage)
 - [❓ FAQ](#-faq)
 - [🤝 Contribuer](#-contribuer)
@@ -48,7 +48,7 @@ une **adaptation technique profonde**, pas un simple copier-coller.
 ### Ce que ce projet apporte en plus
 
 | Aspect | Vidéo Originale (Claude) | Ce Projet (Qwen3.6+) |
-|--------|-------------------------|---------------------|
+| ------ | ----------------------- | ------------------- |
 | **Modèle** | Claude 3.5/4 Sonnet | Qwen3.6-Plus / Flash / Max |
 | **Accès** | CLI Claude Code natif | OpenRouter (API OpenAI-compatible) |
 | **Cache** | `cache_control: ephemeral` natif | Prefix matching implicite + gestion client-side |
@@ -88,7 +88,7 @@ Ce projet résout ce problème par une approche duale :
 ## 🔑 Concepts Clés
 
 | Terme | Définition |
-|-------|-----------|
+| ----- | --------- |
 | **Token** | Plus petite unité de texte traitée et facturée. En français, 1 token ≈ 1,3 mots. |
 | **Hygiène de Contexte** | Pratique consistant à maintenir un contexte minimal et pertinent pour éviter la dégradation des performances et le gaspillage de tokens. |
 | **Promptor** | Expert virtuel spécialisé en création de prompts optimisés. Applique systématiquement les hacks pertinents lors de la génération. |
@@ -105,7 +105,7 @@ Ce projet résout ce problème par une approche duale :
 ### Croissance de la consommation par message
 
 | Message | Contenu relu par le modèle | Coût estimé (tokens) |
-|---------|---------------------------|---------------------|
+| ------- | ------------------------- | ------------------- |
 | 1 | Message 1 + réponse | ~500 |
 | 2 | Messages 1-2 + réponses 1-2 | ~1 500 |
 | 5 | Messages 1-5 + réponses 1-5 | ~4 000 |
@@ -116,7 +116,7 @@ Ce projet résout ce problème par une approche duale :
 ### Overhead invisible ajouté à chaque message
 
 | Source | Impact estimé | Détail |
-|--------|--------------|--------|
+| ------ | -------------- | ------ |
 | 📄 `.promptor_starter.md` | ~2-5k tokens | Matrice Promptor chargée en contexte |
 | 📄 `qwen_sys.md` | ~1-3k tokens | Instructions système (si <200 lignes) |
 | 🔌 Serveurs MCP connectés | ~5-18k tokens/msg | Par serveur MCP actif |
@@ -133,7 +133,7 @@ peut consommer **50 000+ tokens** dont seulement 10-15 % utiles à la tâche ré
 ### Bénéfices Attendus
 
 | Bénéfice | Impact Estimé | Détail |
-|----------|--------------|--------|
+| ------- | ------------ | ------ |
 | 💰 Économie de tokens | 60-80 % de réduction | Sur sessions longues (>30 messages) |
 | 🎯 Qualité de réponse | Moins de "lost in the middle" | Contexte focalisé = réponses plus pertinentes |
 | ⚡ Productivité | Moins d'itérations | Résultats plus précis du premier coup |
@@ -190,7 +190,7 @@ Copy-Item config/opencode/opencode.json.example config/opencode/opencode.json
 ### Architecture des Fichiers
 
 | Fichier | Rôle | Portée |
-|---------|------|--------|
+| ------- | ---- | ------ |
 | `~/.config/opencode/AGENTS.md` | 18 hacks d'optimisation tokens | **Toujours actif** dans toutes les sessions |
 | `~/.config/opencode/commands/promptor.md` | Promptor (expert prompt engineering) | Actif via `/promptor` |
 | `~/.config/opencode/opencode.json` | Provider + modèle par défaut | Configuration globale |
@@ -263,7 +263,7 @@ Les 18 hacks sont **toujours actifs** (via `~/.config/opencode/AGENTS.md`).
 
 Pour utiliser Promptor (création de prompts sur-mesure) :
 
-```
+```powershell
 /promptor
 ```
 
@@ -284,7 +284,7 @@ Pour utiliser Promptor (création de prompts sur-mesure) :
 ### 🔹 Niveau 1 : Fondamentaux (Hacks 1-9)
 
 | # | Hack | Gain Estimé | Implémentation Qwen3.6+ |
-|---|------|-------------|------------------------|
+| - | ---- | ----------- | ---------------------- |
 | 1 | **Nouvelle session par tâche** | ~40-60 % | Reset explicite de l'array `messages`. Pas de `/clear` natif, gestion client-side. |
 | 2 | **Désactiver MCP inutiles** | ~5-18k tokens/msg | Supprimer les outils non utilisés de `tools=[]` dans l'appel API. |
 | 3 | **Regrouper les prompts** | ~3x moins cher | 1 message combiné vs 3 follow-ups. Éditer/regénérer au lieu d'empiler. |
@@ -298,7 +298,7 @@ Pour utiliser Promptor (création de prompts sur-mesure) :
 ### 🔸 Niveau 2 : Intermédiaire (Hacks 10-14)
 
 | # | Hack | Gain Estimé | Implémentation Qwen3.6+ |
-|---|------|-------------|------------------------|
+| -- | ------ | ------------- | ------------------------ |
 | 10 | **`.qwen_sys.md` < 200 lignes** | ~2-5k tokens/msg | Traiter comme un INDEX (pointeurs vers fichiers), pas un dump de contenu brut. |
 | 11 | **Références précises `@fichier:Lx-Ly`** | Moins d'exploration | Guider le modèle vers des lignes spécifiques. Parsing regex côté client. |
 | 12 | **Compact manuel à 60 %** | Qualité préservée | Demander un résumé structuré, resetter `messages`, réinjecter résumé + tâche. |
@@ -308,7 +308,7 @@ Pour utiliser Promptor (création de prompts sur-mesure) :
 ### 🔺 Niveau 3 : Expert (Hacks 15-18)
 
 | # | Hack | Gain Estimé | Implémentation Qwen3.6+ |
-|---|------|-------------|------------------------|
+| -- | ------ | ------------- | ------------------------ |
 | 15 | **Router de modèles** | 40-60 % coût | `plus` (défaut), `flash` (sous-tâches), `max` (complexe). Logique conditionnelle. |
 | 16 | **Sous-agents limités** | 7-10x moins cher | Max 2-3 parallèles. Déléguer à `qwen-flash`. Chaque sous-agent = contexte complet rechargé. |
 | 17 | **Off-Peak Scheduling** | Meilleure dispo/coût | Peak : 14h-20h CET. Off-Peak : après 20h + weekend. Grouper les tâches lourdes hors pic. |
@@ -329,7 +329,7 @@ Promptor suit un workflow en 3 étapes itératives :
 ### Options Utiles
 
 | Option | Description | Exemple |
-|--------|-------------|---------|
+| ------ | ----------- | ------- |
 | `[MODE:API]` | Format technique (JSON/code) | `"Génère un prompt pour analyser des données [MODE:API]"` |
 | `[COLLAB:MODE]` | Co-création guidée étape par étape | `"Créons un prompt pour un agent support [COLLAB:MODE]"` |
 | `[TUTO:MODE]` | Tutoriel interactif 4 étapes | Idéal première utilisation |
@@ -355,7 +355,7 @@ Promptor applique systématiquement les hacks suivants lors de la génération d
 ### OpenCode ne reconnaît pas `/promptor`
 
 | Symptôme | Cause Probable | Solution |
-|----------|---------------|----------|
+| -------- | ------------- | -------- |
 | `/promptor` n'apparaît pas | Fichier `promptor.md` absent du dossier `commands/` | Vérifier `~/.config/opencode/commands/promptor.md` |
 | Les hacks ne sont pas appliqués | Fichier `AGENTS.md` absent | Vérifier `~/.config/opencode/AGENTS.md` |
 | `Unrecognized key: "commands"` | JSON config invalide | Lancer `scripts/Fix-OpenCodeConfig.ps1` |
@@ -363,9 +363,9 @@ Promptor applique systématiquement les hacks suivants lors de la génération d
 ### Consommation de tokens toujours élevée
 
 | Vérification | Commande / Action |
-|--------------|-----------------|
+| ------------ | ----------------- |
 | MCP inutiles connectés | Déconnecter les serveurs MCP non essentiels |
-| `.qwen_sys.md` trop long | `Get-Content .qwen_sys.md | Measure-Object -Line` (doit être <200) |
+| `.qwen_sys.md` trop long | `Get-Content .qwen_sys.md`, Measure-Object -Line` (doit être <200) |
 | Pas de compact manuel | Surveiller `% contexte` → compacter à 60 % |
 | Outputs shell non filtrés | Utiliser des hooks pour tronquer les logs >50 lignes |
 | Modèle surdimensionné | Vérifier le routing : `flash` pour les tâches simples |
@@ -373,7 +373,7 @@ Promptor applique systématiquement les hacks suivants lors de la génération d
 ### Problèmes Python (exemples)
 
 | Erreur | Cause | Solution |
-|--------|-------|----------|
+| ------ | ----- | -------- |
 | `ModuleNotFoundError: No module named 'openai'` | Dépendance manquante | `pip install -r examples/requirements.txt` |
 | `OPENROUTER_API_KEY not set` | Variable d'environnement absente | Copier `.env.example` vers `.env` et renseigner la clé |
 | `401 Unauthorized` | Clé API invalide | Vérifier la clé sur [openrouter.ai/keys](https://openrouter.ai/keys) |
@@ -461,8 +461,8 @@ comprendre les hacks dans leur contexte Claude Code original.
 
 ### Stratégie de Branches
 
-```
-main          ← Branche de production (stable, taguée)
+```text
+main   ← Branche de production (stable, taguée)
   │
   └── dev  ← Branche d'intégration (prochaine version)
         │
@@ -475,24 +475,30 @@ main          ← Branche de production (stable, taguée)
 
 1. **Forker** le dépôt depuis GitHub
 2. **Créer une branche** depuis `dev` :
+
    ```powershell
    git checkout dev
    git checkout -b feat/ma-nouvelle-fonctionnalite
    ```
+
 3. **Commiter** avec un message conventionnel :
+
    ```powershell
    git commit -m "feat: ajout de [description]"
    ```
+
 4. **Pusher** la branche :
+
    ```powershell
    git push origin feat/ma-nouvelle-fonctionnalite
    ```
+
 5. **Ouvrir une Pull Request** vers `dev` via `gh pr create` ou l'interface GitHub
 
 ### Conventions de Commit
 
 | Préfixe | Usage | Exemple |
-|---------|-------|---------|
+| ------- | ----- | ------- |
 | `feat:` | Nouvelle fonctionnalité | `feat: ajout alertes webhook Discord` |
 | `fix:` | Correction de bug | `fix: comptage tokens incorrect` |
 | `docs:` | Documentation | `docs: mise à jour section FAQ` |
