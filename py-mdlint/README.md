@@ -93,7 +93,7 @@ Créez `.markdownlint.json` à la racine :
 ### Headings (13 règles)
 
 | ID | Alias | Description | Fixable |
-|----|-------|-------------|---------|
+| -- | ----- | ----------- | ------- |
 | MD001 | heading-increment | Incrémentation niveau headings | ❌ |
 | MD003 | heading-style | Cohérence style headings | ✅ |
 | MD018 | no-missing-space-atx | Espace manquant après `#` | ✅ |
@@ -111,7 +111,7 @@ Créez `.markdownlint.json` à la racine :
 ### Lists (7 règles)
 
 | ID | Alias | Description | Fixable |
-|----|-------|-------------|---------|
+| -- | ----- | ----------- | ------- |
 | MD004 | ul-style | Marqueur listes non-ordonnées | ✅ |
 | MD005 | list-indent | Indentation listes incohérente | ✅ |
 | MD007 | ul-indent | Indentation listes à puces | ✅ |
@@ -123,7 +123,7 @@ Créez `.markdownlint.json` à la racine :
 ### Whitespace & Format (12 règles)
 
 | ID | Alias | Description | Fixable |
-|----|-------|-------------|---------|
+| -- | ----- | ----------- | ------- |
 | MD009 | no-trailing-spaces | Espaces en fin de ligne | ✅ |
 | MD010 | no-hard-tabs | Tabulations dures | ✅ |
 | MD012 | no-multiple-blanks | Lignes vides consécutives multiples | ✅ |
@@ -140,7 +140,7 @@ Créez `.markdownlint.json` à la racine :
 ### Links & Images (9 règles)
 
 | ID | Alias | Description | Fixable |
-|----|-------|-------------|---------|
+| -- | ----- | ----------- | ------- |
 | MD011 | no-reversed-links | Liens inversés | ✅ |
 | MD034 | no-bare-urls | URLs nues non protégées | ✅ |
 | MD042 | no-empty-links | Liens vides | ❌ |
@@ -154,7 +154,7 @@ Créez `.markdownlint.json` à la racine :
 ### Code & Style (8 règles)
 
 | ID | Alias | Description | Fixable |
-|----|-------|-------------|---------|
+| -- | ----- | ----------- | ------- |
 | MD014 | commands-show-output | `$` avant commandes sans output | ✅ |
 | MD035 | hr-style | Cohérence règles horizontales | ✅ |
 | MD036 | no-emphasis-as-heading | Emphase utilisée comme heading | ❌ |
@@ -167,7 +167,7 @@ Créez `.markdownlint.json` à la racine :
 ### Tables (4 règles)
 
 | ID | Alias | Description | Fixable |
-|----|-------|-------------|---------|
+| -- | ----- | ----------- | ------- |
 | MD056 | table-column-count | Nombre colonnes tableaux | ✅ |
 | MD058 | blanks-around-tables | Lignes vides autour tableaux | ✅ |
 | MD060 | table-column-style | Alignement colonnes tableaux | ✅ |
