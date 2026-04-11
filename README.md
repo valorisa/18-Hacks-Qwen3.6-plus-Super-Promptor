@@ -35,7 +35,7 @@ la modélisation des instructions dans le but de générer une représentation d
 **[18 Claude Code Hacks You NEED to Know About](https://youtu.be/WSL8730oQ8A?si=N6gA07gIgN3YlLjX)**, les **[5 cercles | 
 Claude Code : LA sauce secrète pour le cadrer SYSTEMATIQUEMENT](https://youtu.be/jDlGwnIc57Y?si=L2FzIvItPHECDA3d)** et **[
 J'ai testé tous les prompts Claude : voici le meilleur !](https://youtu.be/iRCn9yKBIfo?si=UVAaqrRXTvqKvSHP)**
-initialement conçus pour **Claude Code d'Anthropic**, vers l'écosystème **Qwen3.6+ via OpenRouter**.
+initialement conçus pour **Claude Code d'Anthropic**, vers l'écosystème **Qwen3.6+ via OpenRouter et opencode**.
 
 ### Pourquoi une transposition ?
 
