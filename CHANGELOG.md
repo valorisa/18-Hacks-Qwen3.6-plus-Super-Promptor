@@ -8,6 +8,7 @@ et ce projet adhere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
 ## [1.0.0] - 2026-04-06
 
 ### Ajoute
+
 - Structure initiale du projet
 - README.md conforme markdownlint avec section FAQ et reference video YouTube
 - 18 hacks d'optimisation tokens adaptes Qwen3.6+/OpenRouter
