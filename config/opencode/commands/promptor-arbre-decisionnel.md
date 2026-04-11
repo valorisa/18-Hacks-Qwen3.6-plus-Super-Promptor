@@ -9,7 +9,7 @@
 # 🔐 ENTÊTE MÉTADATA
 
 | Attribut | Valeur |
-|----------|--------|
+| -------- | ------ |
 | Version | 1.0 |
 | Date | 2026-04-11 |
 | Piliers | 5 Cercles + 18 Hacks + Workflow Promptor |
@@ -21,7 +21,7 @@
 
 ## RACINE: PIPELINE PROMPTOR
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                         PIPELINE PROMPTOR (FUSION)                          │
 │  Entrée: USER_REQUEST + INPUT_CONTEXT + FOCUS_HACKS + DOMAIN                │
@@ -31,7 +31,7 @@
                     ▼                               ▼
         ┌───────────────────┐               ┌───────────────────┐
         │  PHASE 1          │               │  PHASE 2          │
-        │  ANALYSE          │───────┬─────▶│   FILTRE           │
+        │  ANALYSE          │───────┬─────▶    FILTRE           
         │  5 CERCLES        │       │       │  18 HACKS         │
         └───────────────────┘       │       └───────────────────┘
                     │               │
@@ -41,7 +41,7 @@
         │ 🟢 RECHERCHE      │       │
         │ 🟡 GRILLE         │       │
         │ 🔴 TRIBUNAL       │       │
-        │ 🟣 FIX/RETRIAGE   │◀──────┘
+        │ 🟣 FIX/RETRIAGE   │◀─────┘
         └───────────────────┘
                     │
                     ▼
@@ -54,8 +54,8 @@
         ┌───────────┴───────────┬───────────┬───────────┐
         ▼                       ▼           ▼           ▼
     Partie A               Partie B    Partie C    Partie D
-    Calibrage              Prompt      Auto-      Inter-
-                          Optimisé    Critique   gatoire
+    Calibrage              Prompt      Auto-       Interrogatoire
+                           Optimisé    Critique    
 ```
 
 ---
@@ -330,7 +330,7 @@ Souhaites-tu que j'applique ce petit ajustement ?
 
 ## 🔄 FLOW COMPLET - REPRÉSENTATION TEXTUELLE
 
-```
+```text
 ══════════════════════════════════════════════════════════════════════════════
                            PIPELINE EXÉCUTION COMPLET
 ══════════════════════════════════════════════════════════════════════════════
@@ -436,7 +436,7 @@ Souhaites-tu que j'applique ce petit ajustement ?
 ## 📋 MATRICE DE DÉCISION - CONDITIONS DE TRANSITION
 
 | État Actuel | Condition | État Suivant | Action |
-|-------------|-----------|--------------|--------|
+| ----------- | --------- | ------------ | ------ |
 | **Entrée** | Valid | 🔵 STOP | Démarrer analyse |
 | **🔵 STOP** | [VÉRIFIÉ] | 🟢 RECHERCHE | Passer à ancrage |
 | **🔵 STOP** | [À CLARIFIER] | RETOUR USER | Demander précision |
@@ -457,7 +457,7 @@ Souhaites-tu que j'applique ce petit ajustement ?
 ## 🔣 LÉGENDE DES SYMBOLES
 
 | Symbole | Signification |
-|---------|---------------|
+| ------- | ------------- |
 | 🔵 🟢 🟡 🔴 🟣 | Les 5 Cercles (STOP, RECHERCHE, GRILLE, TRIBUNAL, FIX) |
 | #1-18 | Numéro de hack Qwen3.6+ |
 | {{VARIABLE}} | Placeholder générique |
@@ -473,7 +473,7 @@ Souhaites-tu que j'applique ce petit ajustement ?
 ## 📐 SCHÉMA DE VALIDATION (GRILLE TYPE)
 
 | Critère | Type | Hack Référencé | Vérification |
-|---------|------|----------------|--------------|
+| ------- | ---- | -------------- | ------------ |
 | Domaine détecté | Binaire (Oui/Non) | #1 | &lt;30s |
 | Standards pertinents | Liste | #11, #15 | &lt;30s |
 | Checklist binaire | Binaire | #3, #12 | &lt;30s |
