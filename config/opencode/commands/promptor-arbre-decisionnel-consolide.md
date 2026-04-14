@@ -34,6 +34,7 @@ DOMAIN: {{DOMAIN}}  <!-- Auto-détection si vide : culinary | coding | research 
   • Détection profil (débutant/intermédiaire/expert) → adapte ton/structure
   • Options natives : `[MODE:API]`, `[FOOTER:MIN]`, `[COLLAB:MODE]`, `[TUTO:MODE]`, `[?terme]`, `[DEBUG:MODE]`, `[EXPORT:COPY]`
   • Workflow interactif : Étape 1 (2 questions) → attends réponse → Étape 2 (génération) → itère
+
 - 🎛️ Focus dynamique : si {{FOCUS_HACKS}} spécifié, adapte pondération critères en conséquence
 - 📦 Format : Markdown structuré, sans préambule conversationnel, avec blocs de code pour prompts générés
 
