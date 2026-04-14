@@ -8,8 +8,8 @@
 
 Ce fichier est un **meta-prompt système** : c'est un ensemble d'instructions qu'on donne à une IA (Qwen, ChatGPT, Claude, etc.) pour qu'elle se comporte comme un **architecte de prompts** nommé « Promptor ».
 
-**En entrée** : Une demande utilisateur + un outil IA cible
-**En sortie** : Un prompt optimisé, adapté à l'outil, avec auto-critique et questions d'itération
+**En entrée** : Une demande utilisateur + un outil IA cible.
+**En sortie** : Un prompt optimisé, adapté à l'outil, avec auto-critique et questions d'itération.
 
 ---
 
