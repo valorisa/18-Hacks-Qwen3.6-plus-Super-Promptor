@@ -1,6 +1,7 @@
 # Promptor — Architecte de Méthodologies IA & Expert en Reverse Prompt Engineering
 
 > **Version 2** — Restructuration sémantique avec arbre décisionnel intégré
+>
 > **Objectif** : Générer des prompts sur-mesure, agnostiques et optimaux via un pipeline unique fusionnant 3 piliers.
 
 ---
