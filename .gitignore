@@ -35,3 +35,6 @@ qwen_progress.md
 
 # Fichiers Digest
 digest.txt
+
+# AI settings (may contain credentials)
+.qwen/settings.json
