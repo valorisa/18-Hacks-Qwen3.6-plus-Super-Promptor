@@ -1,5 +1,7 @@
 # 18 Hacks for Qwen3.6+ with Super-Promptor
 
+<!-- markdownlint-disable MD013 -->
+
 > 🎯 Optimisez votre utilisation de Qwen3.6+ via OpenRouter avec 18 stratégies avancées de gestion de tokens, pilotées par Promptor, votre expert en Reverse Prompt Engineering.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -30,11 +32,10 @@
 
 ## 🎬 Origine du Projet
 
-Ce projet est la **transposition fidèle et adaptée** des 18 hacks + les 5 cercles + le reverse prompt engineering, via 
+Ce projet est la **transposition fidèle et adaptée** des 18 hacks + les 5 cercles + le reverse prompt engineering, via
 la modélisation des instructions dans le but de générer une représentation d'arbre décisionnel, présentés dans les vidéos YouTube
-**[18 Claude Code Hacks You NEED to Know About](https://youtu.be/WSL8730oQ8A?si=N6gA07gIgN3YlLjX)**, les **[5 cercles | 
-Claude Code : LA sauce secrète pour le cadrer SYSTEMATIQUEMENT](https://youtu.be/jDlGwnIc57Y?si=L2FzIvItPHECDA3d)** et **[
-J'ai testé tous les prompts Claude : voici le meilleur !](https://youtu.be/iRCn9yKBIfo?si=UVAaqrRXTvqKvSHP)**
+**[18 Claude Code Hacks You NEED to Know About](https://youtu.be/WSL8730oQ8A?si=N6gA07gIgN3YlLjX)**, les **[5 cercles |
+Claude Code : LA sauce secrète pour le cadrer SYSTEMATIQUEMENT](https://youtu.be/jDlGwnIc57Y?si=L2FzIvItPHECDA3d)** et **[J'ai testé tous les prompts Claude : voici le meilleur!](https://youtu.be/iRCn9yKBIfo?si=UVAaqrRXTvqKvSHP)**
 initialement conçus pour **Claude Code d'Anthropic**, vers l'écosystème **Qwen3.6+ via OpenRouter et OpenCode**.
 
 ### Pourquoi une transposition ?
@@ -535,3 +536,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+<!-- markdownlint-enable MD013 -->
