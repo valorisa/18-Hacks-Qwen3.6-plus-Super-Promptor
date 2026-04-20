@@ -272,4 +272,81 @@ Es-tu prêt ? Si oui, lance l'Étape 1.
 
 ---
 
+## Arbre décisionnel consolidé
+
+```
+[ROOT: INITIALISATION SYSTÈME]
+│
+├── ENTRÉES XML
+│   ├── <user_request>{{USER_REQUEST}}</user_request>
+│   ├── <optional_context>{{INPUT_CONTEXT}}</optional_context>
+│   └── <focus_config>
+│       ├── FOCUS_HACKS: {{FOCUS_HACKS}}
+│       └── DOMAIN: {{DOMAIN}}
+│
+├── DÉTECTION DU MODE DE SORTIE
+│   ├── SI {{USER_REQUEST}} contient [MODE:API]
+│   │   ├── Route → OUTPUT JSON STRICT
+│   │   ├── Schéma : methodology / domain_detected / focus_hacks / applied_hacks / output
+│   │   ├── Supprime <response_footer>, <quick_start>, Parties A-D
+│   │   └── Terminaison immédiate
+│   │
+│   └── SINON → Mode Conversationnel
+│       │
+│       ├── ÉTAPE 1 : IDENTIFICATION & PROFILAGE
+│       │   ├── Pose 2 questions (Besoin + Outil)
+│       │   ├── WAIT → Bloque jusqu'à réception
+│       │   └── ANALYSE
+│       │       ├── Détecte DOMAIN (auto si vide)
+│       │       ├── Détecte PROFIL (débutant/intermédiaire/expert)
+│       │       └── Résout FOCUS_HACKS
+│       │
+│       ├── ÉTAPE 2 : MOTEUR PIPELINE
+│       │   ├── C1 STOP → Validation + Risques → [VÉRIFIÉ] / [À CLARIFIER]
+│       │   ├── C2 RECHERCHE → Benchmarks spécifiques à DOMAIN
+│       │   ├── C3 GRILLE → Checklist binaire (chaque critère ↔ ≥ 1 Hack #1-18)
+│       │   ├── C4 TRIBUNAL → Tableau Pass/Fail strict
+│       │   ├── C5 FIX → Boucle correctrice (max 3 itérations → 100% ✅ ou [BLOCAGE])
+│       │   │
+│       │   └── FILTRE 18 HACKS
+│       │       ├── tokens → #1,3,5,12,14,15
+│       │       ├── qualité → #4,8,10,11,18
+│       │       ├── rapidité → #2,7,13,15,17
+│       │       ├── sécurité → #1,8,9,14,18
+│       │       ├── collaboration → #3,6,12,16,18
+│       │       └── vide → #1,3,4,11,12,15,18
+│       │
+│       ├── ÉTAPE 3 : GÉNÉRATION (Parties A, B, C, D)
+│       │   ├── A : Calibrage → 3 puces max
+│       │   ├── B : Prompt Optimisé → Rôle/contexte + Instructions(Hacks) + {{VARIABLE}}
+│       │   ├── C : Auto-Critique → Score 0-5 + Ajustement
+│       │   └── D : Interrogatoire → 2-3 questions
+│       │
+│       ├── ÉTAPE 4 : BOUCLE D'INTERACTION
+│       │   ├── SI [?mot] → Explication simple → Reprend workflow
+│       │   ├── SI débutant + première utilisation → Injecte <quick_start> + [TUTO:MODE]
+│       │   ├── SI retour utilisateur → Retour ÉTAPE 2 (max 3 cycles → 5 étoiles)
+│       │   └── SINON → Injecte <response_footer>
+│       │
+│       └── PRÉ-FLIGHT CHECK (SELF-CHECK)
+│           ├── Séquence 1→2→3→4→5 respectée ?
+│           ├── ≥ 3 hacks injectés par instruction ?
+│           ├── [À CLARIFIER] si incertitude ?
+│           └── Conformité <output_schema> & ton adapté ?
+│
+└── TERMINAISON : Flux clos. Prêt pour nouvelle session (Hack #1).
+```
+
+### Relations entre variables (ce que l'arbre révèle)
+
+**Fork précoce et irréversible.** `[MODE:API]` est le seul signal qui court-circuite l'intégralité du pipeline. Sa détection dans `{{USER_REQUEST}}` est la première décision réelle — avant même la résolution de `{{DOMAIN}}` ou `{{FOCUS_HACKS}}`. Cela signifie que ces deux variables ne sont jamais résolues en mode API, ce que le document original ne rendait pas explicite.
+
+**Cascade de dépendances sur `{{FOCUS_HACKS}}`.** Cette variable traverse trois couches distinctes : elle détermine quels hacks sont activés en Phase 2, lesquels sont annotés dans chaque cercle de Phase 1, et comment la Partie B formate les instructions. Si elle reste vide, le fallback `#1,3,4,11,12,15,18` s'applique partout — ce n'est pas un état dégradé, c'est un profil complet.
+
+**`{{INPUT_CONTEXT}}` est utilisé à deux cercles distants.** C1 l'utilise pour valider l'existence du problème (`[VÉRIFIÉ]`/`[À CLARIFIER]`), et C4 le réinjecte pour le TRIBUNAL. Une `{{INPUT_CONTEXT}}` vide crée donc deux points de friction, pas un seul.
+
+**La boucle de retour max ×3** est la seule relation cyclique. Elle remonte vers l'Étape 2 en préservant le `{{DOMAIN}}` et le `{{PROFIL}}` déjà résolus à l'Étape 1 — seule la génération est relancée, pas l'identification.
+
+---
+
 *Promptor v2.1 — 18 Hacks Qwen3.6+ | Restructuration par clusters sémantiques*
