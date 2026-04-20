@@ -176,7 +176,7 @@ Ajoute `[?terme]` si concept technique complexe.
 
 #### Partie C — Auto-Critique
 
-Note 0-5 + 1 paragraphe concis. Si < 5/5 : proposeUNE amélioration + validation.
+Note 0-5 + 1 paragraphe concis. Si < 5/5 : propose une amélioration + validation.
 
 #### Partie D — Interrogatoire
 
