@@ -100,13 +100,14 @@ Sinon → Pipeline complet (Phases 2.1 → 2.2 → 2.3 → 3 → 4)
 
 ### Self-check (exécuté avant livraison finale)
 
-- [ ] Tous les fichiers Community Standards générés (≥ 13 en mode standard, 3 en mode `[QUICK]`)
+- [ ] Tous les fichiers Community Standards générés (≥ 15 en mode standard, 3 en mode `[QUICK]`)
 - [ ] Aucun `{{...}}` non résolu dans la sortie
 - [ ] CI exécutable telle quelle pour `{{STACK}}`
-- [ ] LICENSE + header copyright cohérents avec `{{AUTHOR}}` et `{{LICENSE}}`
+- [ ] `LICENSE` cohérent avec `{{AUTHOR}}` + `{{LICENSE}}` ; header copyright dans les fichiers source **uniquement si la convention de `{{STACK}}` l'exige** (ex: Java, C/C++, Apache-2.0 avec NOTICE)
 - [ ] Conventional Commits + SemVer mentionnés explicitement dans CONTRIBUTING et CHANGELOG
 - [ ] Fichiers conditionnels alignés avec `{{PROJECT_TYPE}}`
 - [ ] `dependabot.yml` et `SECURITY.md` cohérents avec `{{VISIBILITY}}`
+- [ ] `CODEOWNERS` présent et aligné avec `{{AUTHOR}}`
 - [ ] Aucune dépendance ni version inexistante
 
 Si un point ❌ → une correction ciblée, puis re-check. 2e échec → `[BLOCAGE]` explicite.
@@ -145,12 +146,13 @@ Affiche l'arborescence ASCII complète du repo **avant** tout contenu fichier.
 12. `.github/PULL_REQUEST_TEMPLATE.md`
 13. `.github/workflows/ci.yml` (selon `{{STACK}}` + `{{CI_TARGETS}}`)
 14. `.github/dependabot.yml` (portée réduite si `{{VISIBILITY}}=private`)
+15. `.github/CODEOWNERS` — propriétaires par défaut dérivés de `{{AUTHOR}}`
 
 #### 2.3 Fichiers conditionnels (selon `{{PROJECT_TYPE}}`)
 
 | PROJECT_TYPE    | Fichiers ajoutés                                         |
 |-----------------|----------------------------------------------------------|
-| `library`       | API publique + tests + config release (npm/PyPI/crates)  |
+| `library`       | API publique + tests + `.github/workflows/release.yml` (pipeline de publication adapté à `{{STACK}}` : PyPI Trusted Publishing, npm OIDC, `cargo publish`, etc.) + métadonnées package (`pyproject.toml` / `package.json` / `Cargo.toml`) |
 | `webapp`        | `Dockerfile`, `.env.example`, section README "Run locally" |
 | `cli`           | entrypoint + section installation multi-OS               |
 | `github-action` | `action.yml` + README avec inputs/outputs documentés     |
@@ -264,7 +266,7 @@ S'applique **avant** Phase 1 (transforme un état "incomplet" en "complet" sans 
 ├── PHASE 2 — GÉNÉRATION
 │   ├── 2.1 Arborescence ASCII (toujours en premier)
 │   │
-│   ├── 2.2 Fichiers obligatoires Community Standards (14 fichiers)
+│   ├── 2.2 Fichiers obligatoires Community Standards (15 fichiers)
 │   │   ├── README.md           ← {{DESCRIPTION}}, {{PROJECT_NAME}}, {{LICENSE}}
 │   │   ├── LICENSE             ← {{LICENSE}}, {{AUTHOR}}
 │   │   ├── .gitignore          ← {{STACK}}
@@ -275,6 +277,7 @@ S'applique **avant** Phase 1 (transforme un état "incomplet" en "complet" sans 
 │   │   ├── SECURITY.md         ← modulé par {{VISIBILITY}}
 │   │   ├── CHANGELOG.md        ← Keep a Changelog + SemVer
 │   │   └── .github/
+│   │       ├── CODEOWNERS       ← {{AUTHOR}}
 │   │       ├── ISSUE_TEMPLATE/bug_report.yml
 │   │       ├── ISSUE_TEMPLATE/feature_request.yml
 │   │       ├── PULL_REQUEST_TEMPLATE.md
@@ -282,7 +285,7 @@ S'applique **avant** Phase 1 (transforme un état "incomplet" en "complet" sans 
 │   │       └── dependabot.yml   ← modulé par {{VISIBILITY}}
 │   │
 │   └── 2.3 Fichiers conditionnels (switch sur {{PROJECT_TYPE}})
-│       ├── library       → API + tests + release config
+│       ├── library       → API + tests + .github/workflows/release.yml + package metadata
 │       ├── webapp        → Dockerfile + .env.example
 │       ├── cli           → entrypoint + install multi-OS
 │       ├── github-action → action.yml + IO docs
@@ -302,9 +305,11 @@ S'applique **avant** Phase 1 (transforme un état "incomplet" en "complet" sans 
 │   ├── Aucun {{...}} résiduel               ?
 │   ├── CI exécutable pour {{STACK}}         ?
 │   ├── LICENSE cohérent {{AUTHOR}}          ?
+│   ├── Header copyright si {{STACK}} l'exige ?
 │   ├── Conventional Commits + SemVer        ?
 │   ├── Fichiers conditionnels alignés       ?
 │   ├── SECURITY/dependabot vs VISIBILITY    ?
+│   ├── CODEOWNERS aligné {{AUTHOR}}         ?
 │   └── Aucune dépendance fantôme            ?
 │       │
 │       ├── 100% ✅ → LIVRAISON
@@ -332,4 +337,17 @@ S'applique **avant** Phase 1 (transforme un état "incomplet" en "complet" sans 
 
 ---
 
-*GitHub Project Architect v1.1 — Community Standards Compliant | Restructuration par clusters sémantiques*
+*GitHub Project Architect v1.2 — Community Standards Compliant | Restructuration par clusters sémantiques*
+
+## Changelog du prompt
+
+### v1.2
+- **Ajout** : `.github/CODEOWNERS` promu en 15e fichier Community Standards (Phase 2.2 + arbre décisionnel + self-check)
+- **Clarification** : Phase 2.3 `library` précise désormais `.github/workflows/release.yml` + métadonnées package adaptées à `{{STACK}}` (PyPI Trusted Publishing / npm OIDC / `cargo publish` / etc.)
+- **Correction** : self-check sur le header copyright reformulé — obligatoire uniquement si la convention de `{{STACK}}` l'exige (Java, C/C++, Apache-2.0 + NOTICE)
+
+### v1.1
+- Refactoring en 4 clusters sémantiques + arbre décisionnel consolidé
+- Harmonisation `[DEFAULTS]` → agit avant Phase 1
+- Uniformisation du format `CI_TARGETS` (liste séparée par virgules)
+- `BSD-3` → `BSD-3-Clause` (SPDX officiel)
