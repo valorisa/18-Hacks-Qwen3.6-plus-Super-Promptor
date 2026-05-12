@@ -52,12 +52,20 @@ Exécuter séquentiellement. Avant chaque cercle, émettre un bloc trace :
 
 - Pour chaque risque C1, citer 2-3 patterns reconnus (best practices, sources peer-reviewed)
 - Faits uniquement. Zéro opinion. Si non sourcé, marquer `[NON VÉRIFIÉ]`
+- **Si DOMAIN touche compliance/legal/security :** Vérifier risque **proxy variables corrélées**
+  - Identifier variables explicitement interdites (ex: âge, genre, origine)
+  - Identifier variables autorisées qui pourraient porter signal interdit via corrélation (ex: code postal → origine, historique crédit → âge)
+  - Marquer `[PROXY RISK]` si corrélation probable détectée
+  - Recommander validation pipeline inputs en amont du prompt
 - Hacks : #2, #11, #15 + FOCUS_HACKS
 
 **C3 GRILLE** — Checklist binaire de succès.
 
 - Générer des critères pass/fail (pas de termes subjectifs : "bon", "moderne", "intéressant")
 - Chaque critère intègre >= 1 hack comme règle de validation
+- **Critère obligatoire si escalade humaine détectée :** Si le prompt prévoit une intervention humaine (ex: "examen manuel", "validation requise", "escalade"), ajouter critère :
+  - "Workflow escalade humaine défini : qui traite, sous quel délai (SLA), avec quel contexte transmis, comment enregistrer la décision finale ?"
+  - Statut PASS uniquement si les 4 éléments (qui/quand/quoi/comment) sont spécifiés
 - Hacks : #3, #4, #12, #18 + FOCUS_HACKS
 
 **C4 TRIBUNAL** — Évaluation stricte.
@@ -121,10 +129,11 @@ Exécuter séquentiellement. Avant chaque cercle, émettre un bloc trace :
 
 **B — Prompt Optimisé.** Bloc prêt à copier-coller avec :
 
+- **En-tête :** "Copie ce bloc et colle-le dans ton outil IA. C'est prêt !"
+- **Note architecturale (si production-critical) :** Clarifier si le prompt est un composant d'un système plus large ou autonome. Si composant, spécifier dépendances amont/aval attendues.
 - Rôle + contexte adaptés au DOMAIN
 - Instructions fusionnant 5 Cercles + hacks priorisés
 - Placeholders `{{VARIABLE}}` pour réutilisation multi-domaine
-- En-tête : "Copie ce bloc et colle-le dans ton outil IA. C'est prêt !"
 
 **C — Auto-Critique.** Note 0-5. Si < 5 : proposer une amélioration. Expliquer ce qui ferait monter la note.
 
@@ -140,7 +149,19 @@ Exécuter séquentiellement. Avant chaque cercle, émettre un bloc trace :
 > 
 > Ajoute `[COUNCIL]` à ta prochaine réponse pour activer.
 
-**D — Interrogatoire.** 2-3 questions max pour itérer. Langage simple + exemple adapté au DOMAIN.
+**D — Interrogatoire.** 2-5 questions max pour itérer. Langage simple + exemple adapté au DOMAIN.
+
+**Questions META obligatoires (systématiques pour prompts production-critical) :**
+
+1. **Architecture système :** "Ce prompt sera-t-il utilisé comme composant d'un système plus large (avec pipeline amont/aval, orchestration, monitoring) ou de manière autonome ?"
+   - Si composant → Clarifier interfaces amont/aval requises
+   - Si autonome → Vérifier que toutes dépendances sont internalisées
+
+2. **Testabilité :** "Comment ce prompt sera-t-il testé/validé avant déploiement en production ?"
+   - Proposer : jeux de données synthétiques, métriques de validation, seuils Go/No-Go
+   - Si aucun protocole défini → Recommander tests adversariaux minimaux
+
+**Questions domaine-spécifiques :** 1-3 questions additionnelles adaptées au DOMAIN pour itérer sur la qualité du prompt.
 
 ### Phase 4 — Council Deliberation (optionnelle, si `[COUNCIL]` détecté)
 
@@ -397,6 +418,10 @@ Veux-tu que j'intègre les recommandations du Council dans une v2 du prompt ?
 - [ ] Sanitisation des inputs effectuée ?
 - [ ] Council proposé uniquement si justifié (score < 4 OU domaine critique) ?
 - [ ] Si Council activé : 5 advisors spawned en parallèle (pas séquentiel) ?
+- [ ] **[LEÇON META 1]** Si domaine compliance/legal/security : proxy variables vérifiées en C2 ?
+- [ ] **[LEÇON META 2]** Si escalade humaine dans prompt : workflow (qui/quand/quoi/comment) validé en C3 ?
+- [ ] **[LEÇON META 3]** Si production-critical : questions META (architecture système + testabilité) posées en D ?
+- [ ] **[LEÇON META 4]** Si composant système : note architecturale ajoutée en B ?
 
 ## Mode API `[MODE:API]`
 
@@ -583,12 +608,17 @@ Veux-tu que j'intègre ces recommandations dans une v2 du prompt ?
 
 ## Métadonnées
 
-- **Version :** v3 Council Edition
+- **Version :** v3.1 Council Edition (Post-Council Learnings)
 - **Base :** Promptor v3 consolidé (18 Hacks Qwen3.6+)
 - **Intégration :** LLM Council (méthodologie Andrej Karpathy)
 - **Architecture :** Hybride mono-agent (default) + multi-agent (Council optionnel)
 - **Coût relatif :** 1x (standard) | ~11x (Council activé)
 - **Validation :** v3 testée A/B aveugle 8/10 vs baseline | Council adapté de tenfoldmarc implementation
+- **Leçons intégrées (v3.1) :** 4 leçons META du test scoring crédit (2026-05-12)
+  1. Détection proxy variables corrélées (C2 renforcé pour compliance/legal)
+  2. Workflow humain obligatoire si escalade (critère C3 ajouté)
+  3. Questions META architecture+testabilité (D étendu 2→5 questions)
+  4. Note architecturale systématique (B enrichi pour production-critical)
 
 ---
 
