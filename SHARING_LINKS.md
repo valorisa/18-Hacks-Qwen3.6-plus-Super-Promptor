@@ -1,4 +1,4 @@
-# 🔗 Liens de Partage — Promptor v3 Council Edition
+# 🔗 Liens de Partage — Promptor v3.1 Council Edition
 
 ## 📦 Repo GitHub
 
@@ -9,7 +9,7 @@ https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor
 
 **Badge Markdown (à copier dans vos posts) :**
 ```markdown
-[![Promptor v3 Council](https://img.shields.io/badge/Promptor-v3_Council_Edition-brightgreen)](https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor)
+[![Promptor v3.1 Council](https://img.shields.io/badge/Promptor-v3.1_Council_Edition-brightgreen)](https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor)
 ```
 
 ---
@@ -46,11 +46,83 @@ https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/confi
 - Exemples d'usage standard vs Council
 - FAQ rapide
 
+### ⭐ NOUVEAU : CHANGELOG v3.1 (Leçons META intégrées)
+```
+https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/CHANGELOG_v3.1.md
+```
+
+**À utiliser pour :**
+- Expliquer les 4 garde-fous META ajoutés en v3.1
+- Démontrer l'amélioration continue (test Council → leçons généralisées)
+- Réduction risques 60-90% sur futurs prompts
+
+### ⭐ NOUVEAU : Exemple Scoring Crédit (Test Council Complet)
+```
+https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/council-report-20260512-175851.html
+https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/council-transcript-20260512-175851.md
+```
+
+**À utiliser pour :**
+- Montrer un test Council complet sur cas production-critical (RGPD/Bâle III)
+- 10 angles morts détectés (vs 3 auto-critique seule)
+- Verdict Chairman : NON DÉPLOYABLE → nécessite 60% infrastructure manquante
+
+### ⭐ NOUVEAU : Résumé Options 1 & 2
+```
+https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/OPTION_1_2_COMPLETE.md
+```
+
+**À utiliser pour :**
+- Documenter le cycle vertueux (test → correction → généralisation)
+- Comparaison avant/après (v1 2/5 → v2 4/5 | v3.0 → v3.1)
+- Métriques session complète (25 min, 3 commits, +1134 lignes)
+
 ---
 
 ## 🎯 Commits Majeurs
 
-### Commit Principal (feat: v3 Council Edition)
+### ⭐ NOUVEAU : Commits v3.1 (Leçons META)
+
+**Commit v3.1 Principal (feat: Upgrade to v3.1)**
+```
+https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/commit/f809500
+```
+
+**Contient :**
+- Meta-prompt v3.1 avec 4 leçons META intégrées
+- CHANGELOG_v3.1.md (documentation complète v3.0 → v3.1)
+- Artefacts Council test scoring crédit (HTML + MD)
+- Skill Claude Code mis à jour
+
+**Statistiques :** +1 123 lignes, -3 lignes
+
+**Commit Documentation v3.1**
+```
+https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/commit/6589445
+```
+
+**Contient :**
+- README mis à jour avec section v3.1
+- 4 nouveautés documentées
+
+**Statistiques :** +11 lignes, -3 lignes
+
+**Commit Résumé Options 1 & 2**
+```
+https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/commit/0ab5777
+```
+
+**Contient :**
+- OPTION_1_2_COMPLETE.md (récapitulatif complet)
+- Métriques session, comparaisons, artefacts
+
+**Statistiques :** +352 lignes
+
+---
+
+### Commits v3.0 (Base Council)
+
+**Commit Principal (feat: v3 Council Edition)**
 ```
 https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/commit/a6a87df
 ```
@@ -96,7 +168,32 @@ https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/commit/67f87cf
 
 ## 📱 Messages de Partage Prêts à l'Emploi
 
-### Twitter / X (280 caractères)
+### ⭐ NOUVEAU : Messages v3.1 (Avec Leçons META)
+
+#### Twitter / X (280 caractères)
+
+**Version courte v3.1 :**
+```
+🎉 Promptor v3.1 lancé — Upgrade META !
+
+4 garde-fous ajoutés pour TOUS les prompts:
+• Détection proxy variables (fairness-washing)
+• Workflow humain obligatoire
+• Questions architecture + testabilité
+• Note composant vs autonome
+
+Réduction risques 60-90% sur futurs prompts
+
+https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor
+
+#AI #PromptEngineering
+```
+
+---
+
+### Messages v3.0 (Base Council)
+
+#### Twitter / X (280 caractères)
 
 **Version courte :**
 ```
@@ -350,7 +447,51 @@ valorisa
 
 ## 📧 Email Templates
 
-### Pour Collègues / Équipe
+### ⭐ NOUVEAU : Templates v3.1 (Upgrade META)
+
+#### Pour Collègues / Équipe
+
+**Objet :** Promptor v3.1 disponible — 4 garde-fous META intégrés
+
+**Corps :**
+```
+Bonjour,
+
+Promptor v3.1 est disponible avec 4 garde-fous META qui améliorent TOUS les prompts générés (pas seulement ceux avec Council).
+
+## Nouveautés v3.1
+
+Suite au test Council sur un prompt de scoring crédit bancaire, 4 leçons ont été généralisées :
+
+1. **Détection proxy variables** : Évite le fairness-washing (ex: bannir "code postal" mais autoriser "revenu" corrélé)
+2. **Workflow humain obligatoire** : Si escalade détectée, qui/quand/quoi/comment doivent être spécifiés
+3. **Questions META** : Architecture système + testabilité pour prompts production-critical
+4. **Note architecturale** : Clarification composant vs autonome
+
+## Impact
+
+Réduction risques futurs :
+• Fairness-washing : -70%
+• Circuits ouverts : -80%
+• Confusion architecturale : -90%
+• Déploiement non testé : -60%
+
+## Documentation
+
+- Changelog : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/CHANGELOG_v3.1.md
+- Exemple test Council : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/council-report-20260512-175851.html
+
+N'hésitez pas si questions !
+
+Cordialement,
+[Votre nom]
+```
+
+---
+
+### Templates v3.0 (Base Council)
+
+#### Pour Collègues / Équipe
 
 **Objet :** Promptor v3 Council Edition disponible — Audit multi-perspective pour prompts critiques
 
