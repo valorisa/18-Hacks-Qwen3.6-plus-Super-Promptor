@@ -24,7 +24,7 @@
 - [🎯 Utilisation Quotidienne](#-utilisation-quotidienne)
 - [📚 Les 18 Hacks Détaillés](#-les-18-hacks-détaillés)
 - [🤖 Promptor : Votre Assistant de Création de Prompts](#-promptor--votre-assistant-de-création-de-prompts)
-  - [⭐ NOUVEAU : Promptor v3 Council Edition](#-nouveau--promptor-v3-council-edition)
+  - [⭐ NOUVEAU : Promptor v3.1 Council Edition](#-nouveau--promptor-v31-council-edition)
 - [🔍 Dépannage](#-dépannage)
 - [❓ FAQ](#-faq)
 - [🤝 Contribuer](#-contribuer)
