@@ -1,21 +1,54 @@
 # 📖 Guide Complet : Promptor Arbre Décisionnel Consolidé
 
-> **Documentation détaillée du fichier `promptor-arbre-decisionnel-consolide.md`**
+> **Documentation des versions Promptor : v3 standard et v3 Council Edition**
 
 ---
 
-## 🎯 Qu'est-ce que ce fichier ?
+## 🎯 Qu'est-ce que Promptor ?
 
-Ce fichier est un **meta-prompt système** : c'est un ensemble d'instructions qu'on donne à une IA (Qwen, ChatGPT, Claude, etc.) pour qu'elle se comporte comme un **architecte de prompts** nommé « Promptor ».
+Promptor est un **meta-prompt système** : un ensemble d'instructions qu'on donne à une IA (Qwen, ChatGPT, Claude, etc.) pour qu'elle se comporte comme un **architecte de prompts** expert.
 
 **En entrée** : Une demande utilisateur + un outil IA cible.
 **En sortie** : Un prompt optimisé, adapté à l'outil, avec auto-critique et questions d'itération.
 
 ---
 
-## 🏗️ Architecture du Prompt
+## 📦 Versions Disponibles
 
-Le fichier est structuré en **4 clusters** + un arbre décisionnel visuel :
+### Promptor v3 Standard
+
+**Fichier :** `promptor-arbre-decisionnel-consolide-v3.md`
+
+Architecture mono-agent classique :
+- 5 Cercles de validation séquentielle
+- 18 Hacks d'optimisation
+- Livraison A-B-C-D (Calibrage, Prompt, Auto-Critique, Interrogatoire)
+
+**Coût :** 1x baseline
+**Temps :** ~20-30 secondes
+**Cas d'usage :** Tous prompts, prototypage rapide
+
+### Promptor v3 Council Edition ⭐ NOUVEAU
+
+**Fichier :** `promptor-arbre-decisionnel-consolide-v3-council.md`
+
+Architecture hybride avec délibération optionnelle :
+- Tout v3 standard (5 Cercles + 18 Hacks + A-B-C-D)
+- **+ Phase 4 optionnelle** : LLM Council avec 5 advisors indépendants
+- Peer review aveugle + Chairman synthesis
+- Génération artefacts (HTML report + MD transcript)
+
+**Coût :** 1x baseline (sans Council) | ~11x (Council activé)
+**Temps :** ~20-30s (sans Council) | ~3 min (Council activé)
+**Cas d'usage :** Standard + haute criticité (production, security, compliance)
+
+**Trigger Council :** Ajouter `[COUNCIL]` à la requête ou confirmer après proposition
+
+---
+
+## 🏗️ Architecture Commune (v3 + v3 Council)
+
+Les deux versions partagent la même base :
 
 ```
 ┌─────────────────────────────────────────┐
@@ -24,10 +57,13 @@ Le fichier est structuré en **4 clusters** + un arbre décisionnel visuel :
 │  CLUSTER 2 : Règles & Contraintes       │
 ├─────────────────────────────────────────┤
 │  CLUSTER 3 : Moteur de Traitement       │
+│              (5 Cercles + 18 Hacks)     │
 ├─────────────────────────────────────────┤
-│  CLUSTER 4 : Interaction & Modes        │
+│  CLUSTER 4 : Livraison (A-B-C-D)        │
 ├─────────────────────────────────────────┤
-│  ARBRE DÉCISIONNEL (Diagramme ASCII)    │
+│  [v3 Council only]                      │
+│  CLUSTER 5 : Council Deliberation       │
+│              (5 Advisors + Peer Review) │
 └─────────────────────────────────────────┘
 ```
 
@@ -41,14 +77,14 @@ Le fichier est structuré en **4 clusters** + un arbre décisionnel visuel :
 Tu es « Promptor », Architecte de Méthodologies IA & Expert en Reverse Prompt Engineering.
 ```
 
-L'IA n'est plus une IA générique. Elle devient un expert spécialisé avec une mission précise.
+L'IA devient un expert spécialisé avec une mission précise.
 
 ### 3 Piliers Fusionnés
 
 | Pilier | Description |
 |--------|-------------|
-| **🔵🟢🟡🔴🟣 5 Cercles** | Méthode de validation séquentielle (comme un pipeline qualité) |
-| **⚡ 18 Hacks** | Optimisations pour Qwen3.6+/OpenRouter (gestion tokens, cache, etc.) |
+| **🔵🟢🟡🔴🟣 5 Cercles** | Méthode de validation séquentielle (pipeline qualité) |
+| **⚡ 18 Hacks** | Optimisations pour gestion tokens, cache, performance |
 | **📐 Workflow Promptor** | Processus interactif en 4 parties pour livrer le prompt final |
 
 ---
@@ -66,14 +102,13 @@ DOMAIN: {{DOMAIN}}
 <optional_context>{{INPUT_CONTEXT}}</optional_context>
 ```
 
-Ce sont les **paramètres d'entrée** du système :
-
 | Variable | Rôle | Valeurs possibles |
 |----------|------|-------------------|
-| `FOCUS_HACKS` | Quel aspect optimiser ? | `tokens`, `qualité`, `rapidité`, `sécurité`, `collaboration`, ou vide |
+| `FOCUS_HACKS` | Quel aspect optimiser ? | `tokens`, `quality`, `speed`, `security`, `collaboration`, ou vide |
 | `DOMAIN` | Quel domaine ? | `culinary`, `coding`, `research`, `creative`, `technical`, `generic` |
 | `USER_REQUEST` | La demande de l'utilisateur | Texte libre |
 | `INPUT_CONTEXT` | Contexte optionnel | Texte libre |
+| `[COUNCIL]` | *v3 Council only* | Flag pour activer délibération multi-agent |
 
 ---
 
@@ -81,7 +116,7 @@ Ce sont les **paramètres d'entrée** du système :
 
 ### La Matrice des 18 Hacks
 
-18 règles d'optimisation pour utiliser Qwen3.6+ efficacement :
+18 règles d'optimisation pour utiliser les LLMs efficacement :
 
 | # | Hack | Gain estimé | Description |
 |---|------|-------------|-------------|
@@ -91,18 +126,29 @@ Ce sont les **paramètres d'entrée** du système :
 | 4 | Plan Mode (95% confiance) | Évite réécritures | Exiger un plan avant exécution |
 | 5 | Monitoring natif | Visibilité | Parser `response.usage` à chaque appel |
 | 6 | Status Line | Alertes | Calculer `% contexte utilisé` |
-| 7 | Dashboard OpenRouter | Vue globale | Vérifier la conso toutes les 20-30 min |
+| 7 | Dashboard check | Vue globale | Vérifier la conso toutes les 20-30 min |
 | 8 | Injection chirurgicale | Réduction ciblée | Coller seulement la section nécessaire |
 | 9 | Surveillance active | Stop boucles | Détecter répétitions, interrompre |
-| 10 | `.qwen_sys.md` < 200 lignes | ~2-5k tokens/msg | Traiter comme un INDEX, pas un dump |
+| 10 | System prompt < 200 lignes | ~2-5k tokens/msg | Traiter comme un INDEX, pas un dump |
 | 11 | Références précises `@fichier:Lx-Ly` | Moins d'exploration | Guider vers des lignes spécifiques |
 | 12 | Compact manuel à 60% | Qualité préservée | Résumer, resetter, réinjecter |
 | 13 | Gestion pauses >5 min | Évite "full reload" | Compact avant absence |
 | 14 | Troncature outputs shell | ~50 lignes max | Filtrer les logs/CLI |
-| 15 | Router de modèles | 40-60% coût | `plus` (défaut), `flash` (simple), `max` (complexe) |
+| 15 | Router de modèles | 40-60% coût | Choisir le bon modèle selon complexité |
 | 16 | Sous-agents limités | 7-10x moins cher | Max 2-3 parallèles |
 | 17 | Off-Peak Scheduling | Meilleur coût | Grouper tâches lourdes hors pic |
 | 18 | Source de vérité persistante | Contexte raccourci | Fichier décisions, pas logs |
+
+### Focus dynamique
+
+| Focus | Hacks prioritaires | Toujours actifs |
+|-------|-------------------|-----------------|
+| `tokens` | #1,3,5,12,14,15 | #3,#4,#11,#18 |
+| `quality` | #4,8,10,11,18 | #3,#4,#11,#18 |
+| `speed` | #2,7,13,15,17 | #3,#4,#11,#18 |
+| `security` | #1,8,9,14,18 | #3,#4,#11,#18 |
+| `collaboration` | #3,6,12,16,18 | #3,#4,#11,#18 |
+| vide (défaut) | #1,3,4,11,12,15,18 | #3,#4,#11,#18 |
 
 ### Contraintes strictes
 
@@ -113,236 +159,313 @@ Ce sont les **paramètres d'entrée** du système :
 🔄 Détection profil → adapte ton/structure
 ```
 
-L'IA doit :
-- Dire "je ne sais pas" plutôt qu'inventer
-- Suivre un ordre strict
-- Détecter si l'utilisateur est débutant/intermédiaire/expert
-- Adapter son langage en conséquence
-
-### Self-Check (Checklist mentale)
-
-Avant chaque réponse, l'IA vérifie :
-
-```
-✓ Ai-je détecté un profil débutant ?
-✓ Ai-je évité le jargon technique non expliqué ?
-✓ Ai-je présenté maximum 2-3 options ?
-✓ Ai-je utilisé des emojis et un ton rassurant ?
-✓ Ai-je signalé avec [À CLARIFIER] toute zone d'incertitude ?
-✓ Ai-je injecté les 18 hacks dans la génération ?
-✓ Ai-je suivi l'ordre strict des 5 Cercles ?
-```
-
 ---
 
 ## ⚙️ CLUSTER 4 : MOTEUR DE TRAITEMENT (PIPELINE)
 
 ### Phase 1 : Les 5 Cercles (Validation séquentielle)
 
-Chaque cercle est une étape de validation obligatoire :
+Chaque cercle émet une trace JSON structurée (v3+) :
+
+```json
+{"circle": "C1", "status": "pass|fail", "evidence": "...", "hacks_applied": ["#N"]}
+```
 
 #### 🔵 Cercle 1 : STOP
 
 **Question** : "Le problème/la demande existe-t-il/elle vraiment ?"
 
-| Action | Description |
-|--------|-------------|
-| Détecte domaine | `culinary`, `coding`, `research`, `creative`, `technical`, `generic` |
-| Identifie risques | 3 risques réels spécifiques au domaine |
-| Vérifie contexte | Marque `[VÉRIFIÉ]` ou `[À CLARIFIER]` |
-| Question canard | "Si j'expliquais à un objet inanimé, quel est le premier point flou ?" |
+- Auto-détecte DOMAIN et USER_PROFILE (débutant/intermédiaire/expert)
+- Identifie 3 risques spécifiques au domaine
+- Vérifie via INPUT_CONTEXT : marque `[VÉRIFIÉ]` ou `[À CLARIFIER]`
+- Question canard : "Si j'expliquais ceci à quelqu'un sans contexte, quel serait le premier point flou ?"
 
 #### 🟢 Cercle 2 : RECHERCHE
 
 **Question** : "Quels sont les standards/benchmarks du domaine ?"
 
-| Action | Description |
-|--------|-------------|
-| Cite standards | Benchmarks pertinents pour le domaine détecté |
-| Fournit patterns | 2-3 techniques reconnues (best practices, sources peer-reviewed) |
-| Règle | Uniquement faits sourcés ou consensus technique. Zéro opinion. |
+- Cite 2-3 patterns reconnus (best practices, sources peer-reviewed)
+- Faits uniquement. Zéro opinion. Si non sourcé, marquer `[NON VÉRIFIÉ]`
 
 #### 🟡 Cercle 3 : GRILLE
 
 **Question** : "Comment mesurer le résultat attendu ?"
 
-| Action | Description |
-|--------|-------------|
-| Génère checklist | Critères binaires (Oui/Non) ou mesures précises |
-| Lien avec Hacks | Chaque critère intègre ≥1 hack comme règle de validation |
-| Élimine subjectif | Pas de "bon", "moderne", "intéressant" |
-
-**Exemple** :
-
-```
-[DOMAIN: culinary]
-✓ Température four spécifiée avec range ±5°C ? → Hack #12 (compact)
-✓ Temps de cuisson indiqué en minutes précises ? → Hack #3 (regroupement)
-✓ Ingrédients quantifiés en grammes/ml ? → Hack #11 (références précises)
-```
+- Génère checklist binaire pass/fail (pas de termes subjectifs)
+- Chaque critère intègre >= 1 hack comme règle de validation
 
 #### 🔴 Cercle 4 : TRIBUNAL
 
 **Question** : "La demande passe-t-elle les critères ?"
 
-| Action | Description |
-|--------|-------------|
-| Applique grille | À la demande utilisateur + contexte |
-| Génère tableau | `| Critère | Résultat (✅/❌) | Preuve/Justification | Hack Référencé |` |
-| Contrainte | Zéro commentaire libre, zéro note globale. Uniquement faits. |
+- Applique la grille C3 à USER_REQUEST + INPUT_CONTEXT
+- Format : `| Critère | Résultat | Preuve | Hack # |`
+- Zéro commentaire libre. Zéro note globale.
 
-#### 🟣 Cercle 5 : FIX/RETEST/REPEAT
+#### 🟣 Cercle 5 : FIX
 
 **Question** : "Comment corriger ce qui échoue ?"
 
-| Action | Description |
-|--------|-------------|
-| Corrige chaque ❌ | UNE correction ciblée (patch, reformulation, commande, étape) |
-| Règle d'arrêt | 100% ✅ ou après 3 itérations max → `[BLOCAGE]` |
-| Génère plan | Plan d'action priorisé prêt à exécuter |
+- Pour chaque FAIL : une correction ciblée
+- Règle d'arrêt : tout PASS ou 3 itérations max → `[BLOQUÉ : raison + output best-effort]`
 
 ### Phase 2 : Filtre 18 Hacks
 
-Chaque instruction du prompt final doit respecter **≥3 hacks** de la matrice.
+Chaque instruction du prompt final tend à intégrer >= 3 hacks de la matrice. Si moins s'appliquent naturellement, ne pas forcer — qualité avant quota.
 
-**Focus dynamique** :
-
-| Focus | Hacks prioritaires |
-|-------|-------------------|
-| `tokens` | #1, #3, #5, #12, #14, #15 |
-| `qualité` | #4, #8, #10, #11, #18 |
-| `rapidité` | #2, #7, #13, #15, #17 |
-| `sécurité` | #1, #8, #9, #14, #18 |
-| `collaboration` | #3, #6, #12, #16, #18 |
-| vide (défaut) | #1, #3, #4, #11, #12, #15, #18 |
-
-### Phase 3 : Livraison en 4 parties
+### Phase 3 : Livraison en 4 parties (A-B-C-D)
 
 | Partie | Contenu |
 |--------|---------|
 | **A: Calibrage** | 3 puces max : logique + domaine + focus appliqué |
-| **B: Prompt Optimisé** | Prompt final, prêt à copier-coller, avec placeholders `{{VARIABLE}}` |
-| **C: Auto-Critique** | Note 0-5 ⭐ + paragraphe concis + proposition d'amélioration |
-| **D: Interrogatoire** | 2-3 questions pour itérer et améliorer |
+| **B: Prompt Optimisé** | Bloc prêt à copier-coller avec placeholders `{{VARIABLE}}` |
+| **C: Auto-Critique** | Note 0-5 + amélioration si < 5 + **proposition Council** (v3 Council only) |
+| **D: Interrogatoire** | 2-3 questions max pour itérer |
 
 ---
 
-## 🎮 CLUSTER 5 : INTERACTION, MODES & DÉMARRAGE
+## 🏛️ CLUSTER 5 : COUNCIL DELIBERATION (v3 Council Edition uniquement)
+
+### Activation
+
+Le Council se déclenche si :
+- Utilisateur ajoute `[COUNCIL]` à sa requête
+- Auto-critique < 4/5 ET domaine critique (security, compliance, production)
+- Utilisateur confirme après proposition en Phase 3C
+
+### Architecture Council
+
+5 Advisors indépendants → Peer review aveugle → Chairman synthesis → HTML report + MD transcript
+
+### Les 5 Advisors
+
+| Advisor | Fonction | Style de pensée |
+|---------|----------|-----------------|
+| **The Contrarian** | Chercher failles, points de rupture | "Qu'est-ce qui peut échouer ?" |
+| **First Principles Thinker** | Vérifier si c'est la bonne question | "Qu'essayons-nous vraiment de résoudre ?" |
+| **The Expansionist** | Opportunités manquées, leviers sous-exploités | "Qu'est-ce qui est sous-dimensionné ?" |
+| **The Outsider** | Détecter curse of knowledge, fresh eyes | "Si je débarque sans contexte, qu'est-ce qui est opaque ?" |
+| **The Executor** | Évaluer l'exécutabilité réelle | "Peut-on utiliser ce prompt lundi matin ?" |
+
+### Tensions créées
+
+**Tension 1 :** Contrarian ↔ Expansionist (downside vs upside)
+**Tension 2 :** First Principles ↔ Executor (rethink everything vs just do it)
+**Modérateur :** The Outsider (garde-fou contre complexité excessive)
+
+### Chairman Synthesis structure
+
+```markdown
+## Où le Council Converge
+[Points d'accord multi-advisors → haute confiance]
+
+## Où le Council Diverge
+[Désaccords substantiels → présenter les deux côtés]
+
+## Angles Morts Détectés
+[Ce qui a émergé uniquement via peer review]
+
+## Recommandation Finale
+[Position claire et directe, pas "ça dépend"]
+
+## Action Immédiate
+[UNE seule action concrète, pas une liste]
+```
+
+**Artefacts générés :**
+- `council-report-{{timestamp}}.html` (visuel, auto-ouvert)
+- `council-transcript-{{timestamp}}.md` (complet, référence)
+
+---
+
+## 🎮 MODES & INTERACTION
 
 ### Mode API
 
 ```
-[MODE:API] → Sortie JSON structurée, pas de texte conversationnel
+[MODE:API] → Sortie JSON stricte, skip A-B-C-D, terminaison
 ```
 
-Schéma JSON imposé :
+Schéma JSON (v3 Council inclut champ `council`) :
 
 ```json
 {
-  "methodology": "5_circles_fusion_universal",
-  "domain_detected": "[auto]",
-  "focus_hacks": "{{FOCUS_HACKS}}",
-  "applied_hacks": ["#X", "#Y", "#Z"],
+  "methodology": "5_circles_v3_council",
+  "domain": "[auto]",
+  "focus": "{{FOCUS_HACKS}}",
+  "trace": [{"circle": "C1", "status": "pass|fail", "evidence": "..."}],
+  "applied_hacks": ["#X"],
   "output": {
-    "calibrage": ["puce1", "puce2", "puce3"],
-    "prompt": "contenu du prompt optimisé universel",
-    "auto_critique": {"note": "X/5", "commentaire": "..."},
-    "interrogatoire": ["question1", "question2"]
+    "calibration": ["..."],
+    "prompt": "...",
+    "self_critique": {"score": "X/5", "comment": "..."},
+    "follow_up": ["..."]
+  },
+  "council": {
+    "activated": true|false,
+    "verdict_summary": "...",
+    "artifacts": ["path/to/html", "path/to/md"]
   }
 }
 ```
 
-### Workflow interactif
+### Workflow Conversationnel
 
 | Étape | Action |
 |-------|--------|
 | **1. Identification** | Pose 2 questions (besoin + outil cible) → ATTEND réponse |
-| **2. Création** | Génère les 4 parties (A, B, C, D) |
-| **3. Itération** | Répète Étape 2 jusqu'à prompt 5 étoiles |
+| **2. Génération** | Exécute Phase 1 + 2 + 3 |
+| **3. Council Gate** | *v3 Council only* : Si trigger/proposition → Phase 4 |
+| **4. Itération** | Répète sur feedback utilisateur (max 3 cycles) |
 
 ### Options disponibles
 
 | Option | Effet |
 |--------|-------|
 | `[MODE:API]` | Format technique (JSON/code) |
-| `[TUTO:MODE]` | Tutoriel pas-à-pas pour débutants |
-| `[COLLAB:MODE]` | Création ensemble avec validation |
+| `[COLLAB:MODE]` | Co-construction étape par étape |
 | `[?mot]` | Explication d'un terme à la demande |
-| `[FOOTER:MIN]` | Réponse courte |
-| `[DEBUG:MODE]` | Infos techniques |
-| `[EXPORT:COPY]` | Version condensée à copier |
-| `[PROFILE:EXPERT]` | Force le profil expert |
-
-### Quick Start (pour débutants)
-
-Un guide interactif qui se lance automatiquement si :
-- C'est la première utilisation
-- ET le profil détecté = débutant
+| `[COUNCIL]` | *v3 Council only* : Active délibération multi-agent |
 
 ---
 
-## 🌳 ARBRE DÉCISIONNEL
+## 📊 Tableau Comparatif
 
-Le fichier se termine par un **diagramme ASCII** qui visualise le flux d'exécution complet :
-
-```
-[ROOT: INITIALISATION SYSTÈME]
-│
-├─ INPUTS XML
-│  ├─ <user_request>{{USER_REQUEST}}</user_request>
-│  ├─ <optional_context>{{INPUT_CONTEXT}}</optional_context>
-│  ├─ <focus_config>
-│  │   ├─ FOCUS_HACKS: {{FOCUS_HACKS}}
-│  │   └─ DOMAIN: {{DOMAIN}}
-│  └─ <interaction_rule> (Règles contextuelles injectées)
-│
-├─ BRANCHE PRINCIPALE : DÉTECTION DU MODE DE SORTIE
-│  ├─ SI `{{USER_REQUEST}}` CONTIENT `[MODE:API]`
-│  │   ├─ ✅ Route → OUTPUT JSON STRICT
-│  │   └─ 🔁 Terminaison immédiate
-│  │
-│  └─ SINON (Mode Conversationnel par défaut)
-│       ├─ ÉTAPE 1 : IDENTIFICATION & PROFILAGE
-│       ├─ ÉTAPE 2 : MOTEUR PIPELINE (5 CERCLES + FILTRE HACKS)
-│       ├─ ÉTAPE 3 : GÉNÉRATION & STRUCTURATION (Parties A, B, C, D)
-│       ├─ ÉTAPE 4 : BOUCLE D'INTERACTION & RÉTROACTION
-│       └─ PRÉ-FLIGHT CHECK (SELF-CHECK)
-│
-└─ TERMINAISON : Flux clos. Prêt pour nouvelle session (Hack #1).
-```
-
-Ce diagramme sert à :
-- **Comprendre** le flux d'exécution en un coup d'œil
-- **Déboguer** si quelque chose ne marche pas
-- **Documenter** l'architecture du prompt pour les contributeurs
+| Aspect | v3 Standard | v3 Council Edition |
+|--------|-------------|-------------------|
+| **Fichier** | `promptor-arbre-decisionnel-consolide-v3.md` | `promptor-arbre-decisionnel-consolide-v3-council.md` |
+| **Phases** | 3 (C1-C5, Hacks, A-B-C-D) | 4 (+ Council optionnel) |
+| **Validation** | Auto-critique seule | Auto-critique + Council optionnel |
+| **Artefacts** | Prompt uniquement | Prompt + HTML + MD (si Council) |
+| **Coût baseline** | 1x | 1x |
+| **Coût max** | 1x | ~11x (si Council activé) |
+| **Temps baseline** | ~20-30s | ~20-30s |
+| **Temps max** | ~20-30s | ~3 minutes (si Council activé) |
+| **Cas d'usage** | Tous prompts | Standard + haute criticité |
+| **Architecture** | Mono-agent | Hybride (mono default, multi si Council) |
 
 ---
 
-## 🚀 Exemple d'Usage
+## 🔧 Fichiers du Répertoire
+
+| Fichier | Description | Recommandé pour |
+|---------|-------------|-----------------|
+| `promptor-arbre-decisionnel-consolide-v3-council.md` | **Version v3 Council Edition** ⭐ | Production critique, audit externe |
+| `promptor-arbre-decisionnel-consolide-v3.md` | Version v3 standard consolidée | Usage général, prototypage rapide |
+| `promptor-arbre-decisionnel-consolide.md` | Version v2.1 consolidée (legacy) | Référence historique |
+| `promptor-arbre-decisionnel.md` | Version avec arbres détaillés | Analyse approfondie |
+| `promptor.md` | Version de base | Débutants, apprentissage |
+| `alt_promptor.md` | Alternative avec MODE:API | Intégrations techniques |
+| `promptor-[lintage_formatage].md` | Version pour lint/format | Automatisation code quality |
+
+---
+
+## 📚 Documentation Additionnelle
+
+### Skill Claude Code
+
+**Installation :** Le skill `promptor-council` est disponible
+
+**Invocation :**
+```bash
+# Dans Claude Code
+/promptor-council
+```
+
+### Fichiers de référence
+
+| Fichier | Localisation | Contenu |
+|---------|--------------|---------|
+| **Skill Promptor Council** | `~/.claude/skills/promptor-council/skill.md` | Documentation skill |
+| **Integration Doc** | `../../../COUNCIL_INTEGRATION.md` | Architecture détaillée, FAQ, exemples |
+| **Exemple complet** | `../../../examples/council-example-moderation.md` | Cas d'usage production |
+
+### Ressources externes
+
+- **LLM Council méthodologie** : Andrej Karpathy
+- **Council implementation** : [tenfoldmarc/llm-council-skill](https://github.com/tenfoldmarc/llm-council-skill)
+- **Validation Promptor v3** : Test A/B aveugle 8/10 victoires vs baseline
+
+---
+
+## 🎯 Recommandations d'Usage
+
+### Débutants
+
+**Commencer par :** `promptor.md` (version de base)
+**Progression :** v3 standard → v3 Council (une fois à l'aise)
+
+### Utilisateurs expérimentés
+
+**Par défaut :** v3 Council Edition
+**Activer Council si :**
+- Prompts production critique
+- Domaines à haut risque (security, compliance, legal)
+- Première exploration domaine complexe
+- Auto-critique < 3/5
+
+### Intégrations techniques
+
+**Pour APIs/automatisation :** `alt_promptor.md` (MODE:API supporté)
+**Pour CI/CD :** `promptor-[lintage_formatage].md` (lint/format tasks)
+
+---
+
+## 🚀 Exemple d'Usage Standard
 
 ```
-Utilisateur: "Je veux un prompt pour analyser des données CSV sur ChatGPT"
-     ↓
-Promptor exécute les 5 Cercles :
-  🔵 STOP → Domaine "data analysis", risques identifiés
-  🟢 RECHERCHE → Standards : pandas, colonnes, types de données
-  🟡 GRILLE → ✓ Format CSV spécifié ? ✓ Colonnes listées ? ✓ Objectif clair ?
-  🔴 TRIBUNAL → Tableau Pass/Fail avec preuves
-  🟣 FIX → Corrections proposées pour chaque ❌
-     ↓
-Applique les 18 Hacks pertinents :
-  #3 (regrouper), #11 (références précises), #15 (router modèle)
-     ↓
-Génère le prompt optimisé en 4 parties :
+User: "Crée un prompt pour résumer des articles de blog tech"
+  ↓
+Promptor exécute C1-C5 :
+  🔵 STOP → Domaine "technical", 3 risques identifiés
+  🟢 RECHERCHE → Standards : structure article, formats résumé
+  🟡 GRILLE → Checklist binaire (longueur, ton, format)
+  🔴 TRIBUNAL → Tableau Pass/Fail
+  🟣 FIX → Corrections pour chaque FAIL
+  ↓
+Applique 18 Hacks (#3, #4, #8, #11, #18)
+  ↓
+Génère A-B-C-D :
   A: Calibrage (3 puces)
-  B: Prompt final (prêt à copier-coller)
-  C: Auto-Critique (4/5 ⭐ + ajustement proposé)
-  D: Questions (pour itérer)
-     ↓
-Utilisateur itère jusqu'à 5 étoiles
-     ↓
-Prompt final prêt à utiliser dans ChatGPT
+  B: Prompt optimisé copier-coller ready
+  C: Auto-critique 4/5
+  D: 2 questions pour itérer
+  ↓
+User itère si besoin → Prompt final 5/5
 ```
+
+**Temps :** ~20-30 secondes | **Coût :** 1x
+
+---
+
+## 🏛️ Exemple d'Usage Council
+
+```
+User: "Crée un prompt pour modérer du contenu utilisateur [COUNCIL]"
+  ↓
+Promptor exécute C1-C5 → A-B-C-D
+  C: Auto-critique 3/5 ("Ambiguïté sur contenus limites")
+  ↓
+[COUNCIL] trigger détecté → Phase 4 activée
+  ↓
+5 Advisors spawned en parallèle (30-60s)
+  ↓
+Peer review anonymisé (30-60s)
+  ↓
+Chairman synthesis (20-30s) :
+  - Convergence : Manque guidelines cas ambigus
+  - Divergence : Contrarian vs Expansionist
+  - Angles morts : Jargon opaque, GDPR compliance
+  - Recommandation : Matrice 10 cas concrets
+  - Action immédiate : Créer specs techniques
+  ↓
+Artefacts générés (5s) + ouverture automatique
+  ↓
+Proposition intégration v2 du prompt
+```
+
+**Temps :** ~3 minutes | **Coût :** ~11x
+**Valeur ajoutée :** 5 angles morts détectés vs auto-critique seule
 
 ---
 
@@ -351,26 +474,30 @@ Prompt final prêt à utiliser dans ChatGPT
 | Aspect | Description |
 |--------|-------------|
 | **Type** | Meta-prompt système (instructions pour IA) |
-| **Format** | Hybride XML/Markdown |
-| **Entrée** | Demande utilisateur + outil IA cible |
-| **Traitement** | 5 Cercles de validation + 18 Hacks de filtrage |
-| **Sortie** | Prompt optimisé en 4 parties + questions d'itération |
-| **But** | Créer des prompts sur-mesure qui respectent les meilleures pratiques |
+| **Entrée** | Demande utilisateur + outil IA cible + contexte optionnel |
+| **Traitement** | 5 Cercles + 18 Hacks + A-B-C-D [+ Council optionnel] |
+| **Sortie** | Prompt optimisé + auto-critique + questions [+ rapport Council] |
 | **Profils** | Adaptatif : débutant/intermédiaire/expert |
-| **Modes** | Conversationnel, API, Tutoriel, Collaboration |
+| **Modes** | Conversationnel, API, Collaboration |
+| **Validation** | Traces JSON (v3+), Test A/B 8/10 victoires |
 
 ---
 
-## 🔧 Fichiers associés
+## 🆘 FAQ Rapide
 
-| Fichier | Rôle |
-|---------|------|
-| `promptor-arbre-decisionnel-consolide.md` | Version consolidée (ce fichier) |
-| `promptor-arbre-decisionnel.md` | Version avec arbres détaillés + matrices de transition |
-| `promptor.md` | Version de base (recommandée pour débuter) |
-| `alt_promptor.md` | Version alternative avec MODE:API et quick-start |
-| `promptor-[lintage_formatage].md` | Version pour tâches de lint/format (sans footer) |
+**Q: Quelle version utiliser ?**
+A: v3 Council Edition si vous voulez l'option audit externe. v3 standard sinon.
+
+**Q: Le Council est-il obligatoire en v3 Council Edition ?**
+A: Non, il est optionnel. Sans trigger `[COUNCIL]`, le comportement est identique à v3 standard.
+
+**Q: Combien coûte le Council ?**
+A: ~11x le coût baseline (5 advisors + 5 reviewers + 1 chairman).
+
+**Q: Quand activer le Council ?**
+A: Production critique, security/compliance, auto-critique < 3/5, première exploration domaine complexe.
 
 ---
 
-*Documentation générée le 14 avril 2026 • Projet 18-Hacks-Qwen3.6-plus-Super-Promptor*
+*Documentation mise à jour le 2026-05-12 • Projet 18-Hacks-Qwen3.6-plus-Super-Promptor*
+*Promptor v3 Council Edition — Prompt Engineering avec délibération multi-perspective optionnelle*
