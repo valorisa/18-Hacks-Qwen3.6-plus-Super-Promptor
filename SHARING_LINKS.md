@@ -369,7 +369,12 @@ Feedback bienvenu ! 🙏
 ```
 🎉 Annonce : Promptor v3 Council Edition
 
-Je suis heureux de partager la sortie de Promptor v3 Council Edition, une extension majeure du système de génération de prompts optimisés.
+**Qu'est-ce que Promptor ?**
+Un système open-source qui génère automatiquement des prompts optimisés pour LLMs via un pipeline auditable : 5 Cercles de validation + 18 Hacks éprouvés. Au lieu d'itérer manuellement, vous obtenez un prompt production-ready en ~30 secondes.
+
+**v3 Council Edition :** Extension optionnelle avec délibération multi-perspective (5 AI advisors) pour auditer les prompts critiques avant déploiement.
+
+---
 
 ## Le Problème
 
@@ -423,15 +428,13 @@ Un prompt de modération pour forums communautaires a été audité :
 
 ## Documentation
 
-📘 Architecture complète : COUNCIL_INTEGRATION.md
-📄 Exemple modération : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/examples/council-example-moderation.md
+📘 Architecture : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/COUNCIL_INTEGRATION.md
+📄 Exemple : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/examples/council-example-moderation.md
 🚀 Skill Claude Code : /promptor-council
 
-Repo GitHub : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor
+Repo : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor
 
-Je cherche des retours sur l'architecture, les cas d'usage, et la priorisation de la roadmap v3.2 (modes allégés, advisors spécialisés, métriques).
-
-Feedback bienvenu ! 🙏
+Retours sur architecture, cas d'usage, et roadmap v3.2 (modes allégés, advisors spécialisés, métriques) bienvenus ! 🙏
 
 #PromptEngineering #AI #LLM #MachineLearning #Security #Compliance
 ```
