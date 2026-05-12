@@ -8,6 +8,7 @@
 [![Qwen3.6+](https://img.shields.io/badge/Model-Qwen3.6+-blue)](https://qwenlm.github.io/)
 [![OpenRouter](https://img.shields.io/badge/Provider-OpenRouter-orange)](https://openrouter.ai/)
 [![PowerShell](https://img.shields.io/badge/Shell-PowerShell_7.6+-blueviolet)](https://learn.microsoft.com/powershell/)
+[![Promptor Council](https://img.shields.io/badge/Promptor-v3_Council_Edition-brightgreen)](COUNCIL_INTEGRATION.md)
 
 ---
 
