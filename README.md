@@ -23,6 +23,7 @@
 - [🎯 Utilisation Quotidienne](#-utilisation-quotidienne)
 - [📚 Les 18 Hacks Détaillés](#-les-18-hacks-détaillés)
 - [🤖 Promptor : Votre Assistant de Création de Prompts](#-promptor--votre-assistant-de-création-de-prompts)
+  - [⭐ NOUVEAU : Promptor v3 Council Edition](#-nouveau--promptor-v3-council-edition)
 - [🔍 Dépannage](#-dépannage)
 - [❓ FAQ](#-faq)
 - [🤝 Contribuer](#-contribuer)
@@ -327,6 +328,60 @@ Promptor suit un workflow en 3 étapes itératives :
 2. **Création** : Génère un prompt optimisé en 4 parties (Calibrage, Prompt, Auto-Critique, Interrogatoire)
 3. **Itération** : Affine le prompt jusqu'à obtenir 5/5 étoiles
 
+### ⭐ NOUVEAU : Promptor v3 Council Edition
+
+**Architecture hybride avec délibération multi-perspective optionnelle**
+
+Promptor v3 Council Edition étend le pipeline standard avec une **Phase 4 optionnelle : LLM Council**, basée sur la méthodologie d'Andrej Karpathy.
+
+**Quand utiliser le Council ?**
+- Prompts pour production critique (security, compliance, legal)
+- Auto-critique < 4/5 sur domaine à haut risque
+- Premier prompt d'un domaine complexe jamais exploré
+- Impact business élevé (système client-facing, infrastructure critique)
+
+**Architecture Council :**
+```
+Pipeline Standard (C1-C5 → 18 Hacks → A-B-C-D)
+                    ↓
+    [COUNCIL] trigger ou confirmation après auto-critique
+                    ↓
+    5 Advisors indépendants (parallèle, 30-60s)
+    ├─ The Contrarian : Cherche les failles
+    ├─ First Principles Thinker : Vérifie si c'est la bonne question
+    ├─ The Expansionist : Opportunités manquées
+    ├─ The Outsider : Curse of knowledge, fresh eyes
+    └─ The Executor : Exécutabilité réelle
+                    ↓
+    Peer Review anonymisé (5 reviewers, 30-60s)
+                    ↓
+    Chairman Synthesis (20-30s)
+    - Convergence : où les advisors s'accordent
+    - Divergence : désaccords productifs
+    - Angles morts : détectés via peer review
+    - Recommandation finale
+    - Action immédiate (une chose concrète)
+                    ↓
+    Artefacts générés
+    ├─ council-report-{{timestamp}}.html (visuel, auto-ouvert)
+    └─ council-transcript-{{timestamp}}.md (complet)
+```
+
+**Coût relatif :**
+- Standard : 1x baseline (~20-30s)
+- Council activé : ~11x baseline (~3 minutes)
+
+**Trigger :**
+- Ajouter `[COUNCIL]` à votre requête : `"Crée un prompt pour [tâche critique] [COUNCIL]"`
+- Ou confirmer après proposition automatique (si auto-critique < 4/5 + domaine critique)
+
+**Documentation complète :**
+- 📘 [COUNCIL_INTEGRATION.md](COUNCIL_INTEGRATION.md) — Architecture détaillée, FAQ, roadmap
+- 📄 [Exemple complet : Modération de contenu](examples/council-example-moderation.md) — Cas d'usage production avec verdict Council
+- 📋 [README Commands](config/opencode/commands/README.md) — Comparaison v3 vs v3 Council
+
+**Skill Claude Code disponible :** `/promptor-council`
+
 ### Options Utiles
 
 | Option | Description | Exemple |
@@ -455,6 +510,35 @@ librement, y compris pour un usage commercial. Voir le fichier [LICENSE](LICENSE
 [18 Claude Code Hacks You NEED to Know About](https://youtu.be/WSL8730oQ8A?si=N6gA07gIgN3YlLjX)
 sur YouTube. Cette vidéo est la source d'inspiration technique de ce projet. Regardez-la pour
 comprendre les hacks dans leur contexte Claude Code original.
+
+### Q11 : Qu'est-ce que le LLM Council et quand l'utiliser ?
+
+Le **LLM Council** (Promptor v3 Council Edition) est un système de validation multi-perspective optionnel qui soumet votre prompt à 5 advisors indépendants :
+
+- **The Contrarian** cherche les failles et points de rupture
+- **The First Principles Thinker** vérifie si vous posez la bonne question
+- **The Expansionist** détecte les opportunités manquées
+- **The Outsider** révèle la "curse of knowledge" (jargon opaque)
+- **The Executor** évalue l'exécutabilité réelle ("utilisable lundi matin ?")
+
+Après leurs analyses, un **peer review aveugle** identifie les angles morts, puis un **Chairman** synthétise un verdict structuré avec recommandations et action immédiate.
+
+**Quand l'utiliser :**
+- ✅ Prompts pour production critique (security, compliance, legal)
+- ✅ Auto-critique Promptor < 3/5
+- ✅ Premier prompt d'un domaine complexe
+- ✅ Impact business élevé (système client-facing, infrastructure)
+
+**Quand le skip :**
+- ❌ Prompt expérimental/interne
+- ❌ Itération rapide (A/B testing)
+- ❌ Auto-critique >= 4/5 sur domaine non-critique
+- ❌ Budget/temps contraint
+
+**Coût :** ~11x plus cher que le pipeline standard (5 advisors + 5 reviewers + 1 chairman)
+**Temps :** +2-3 minutes vs ~20-30s standard
+
+**Exemple :** Un prompt de modération de contenu avec Council a révélé 5 angles morts critiques (GDPR compliance, échelle multilingue, coût humain des escalations) que l'auto-critique seule avait manqués. Voir [examples/council-example-moderation.md](examples/council-example-moderation.md).
 
 ---
 
