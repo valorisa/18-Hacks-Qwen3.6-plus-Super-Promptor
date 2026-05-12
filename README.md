@@ -329,11 +329,19 @@ Promptor suit un workflow en 3 étapes itératives :
 2. **Création** : Génère un prompt optimisé en 4 parties (Calibrage, Prompt, Auto-Critique, Interrogatoire)
 3. **Itération** : Affine le prompt jusqu'à obtenir 5/5 étoiles
 
-### ⭐ NOUVEAU : Promptor v3 Council Edition
+### ⭐ NOUVEAU : Promptor v3.1 Council Edition
 
-**Architecture hybride avec délibération multi-perspective optionnelle**
+**Architecture hybride avec délibération multi-perspective optionnelle + 4 garde-fous META**
 
-Promptor v3 Council Edition étend le pipeline standard avec une **Phase 4 optionnelle : LLM Council**, basée sur la méthodologie d'Andrej Karpathy.
+Promptor v3.1 Council Edition étend le pipeline standard avec une **Phase 4 optionnelle : LLM Council**, basée sur la méthodologie d'Andrej Karpathy.
+
+**Nouveautés v3.1 (2026-05-12) :**
+- 🔍 **Détection proxy variables** : Évite le fairness-washing (variables interdites masquées par corrélations)
+- 🏥 **Workflow humain obligatoire** : Si escalade détectée, qui/quand/quoi/comment doivent être spécifiés
+- 🔧 **Questions META** : Architecture système + testabilité pour prompts production-critical
+- 📐 **Note architecturale** : Clarification composant vs autonome dans prompt généré
+
+[Voir le changelog complet v3.0 → v3.1](CHANGELOG_v3.1.md)
 
 **Quand utiliser le Council ?**
 - Prompts pour production critique (security, compliance, legal)
