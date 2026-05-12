@@ -339,7 +339,7 @@ Un prompt de modération pour forums communautaires a été audité :
 ## Documentation
 
 📘 Architecture complète : COUNCIL_INTEGRATION.md
-📄 Exemple modération : examples/council-example-moderation.md
+📄 Exemple modération : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/examples/council-example-moderation.md
 🚀 Skill Claude Code : /promptor-council
 
 Repo GitHub : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor
