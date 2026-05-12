@@ -281,6 +281,91 @@ Feedback bienvenu !
 
 ### LinkedIn (3000 caractères max)
 
+#### Version v3.1 (Leçons META)
+
+```
+🎉 Annonce : Promptor v3.1 Council Edition
+
+Je suis heureux de partager Promptor v3.1 Council Edition, une évolution majeure avec 4 garde-fous META qui améliorent TOUS les prompts générés.
+
+## Le Problème
+
+L'auto-critique seule (mono-agent) manque des angles morts critiques sur les prompts de production. Un prompt qui obtient 4/5 peut sembler solide, mais cache souvent des failles invisibles depuis une seule perspective.
+
+## Nouveautés v3.1 : 4 Garde-Fous META
+
+Suite au test Council sur un prompt de **scoring crédit bancaire** (production critique, RGPD/Bâle III), 4 leçons ont été généralisées :
+
+1. **Détection proxy variables** : Évite le fairness-washing (bannir "code postal" mais autoriser "revenu" corrélé = théâtre de conformité)
+2. **Workflow humain obligatoire** : Si escalade détectée, qui/quand/quoi/comment doivent être spécifiés
+3. **Questions META** : Architecture système + testabilité pour prompts production-critical
+4. **Note architecturale** : Clarification composant vs autonome
+
+**Impact :** Réduction risques 60-90% sur futurs prompts
+
+## Test Council : Scoring Crédit Bancaire
+
+**Auto-critique v1 (2/5) avait détecté :**
+• Pondérations (40-25-20-15%) arbitraires
+• Explicabilité SHAP opaque
+
+**Council a révélé EN PLUS 10 angles morts :**
+1. Confusion "spécification vs système" (60% infrastructure manquante)
+2. Fairness-washing (proxy variables géographie/âge dans revenu/historique)
+3. Workflow "EXAMEN MANUEL" sans SLA/routing (circuit ouvert)
+4. Monitoring drift absent (PSI/CSI)
+5. Traçabilité forensique manquante (contestations légales)
+6. Tests adversariaux absents (gaming, discrimination)
+7. Responsabilité légale floue (qui signe quoi)
+8. Explicabilité non actionnelle (pas de contrefactuels)
+9. Fallback LLM indisponible absent
+10. Gaming detection manquante
+
+**Prompt v2 intégrant les 10 corrections : 4/5** (+2 points)
+
+**Verdict Chairman :** NON DÉPLOYABLE en v1 → DÉPLOYABLE en v2 avec infrastructure spécifiée. Risque réduit CRITIQUE → MODÉRÉ.
+
+## Architecture Complète (v3.0 base + v3.1 leçons)
+
+Pipeline Standard (C1-C5 → 18 Hacks → A-B-C-D) + Phase 4 optionnelle (Council)
+→ Coût: 1x (standard) | ~11x (Council)
+→ Temps: ~20-30s (standard) | ~3 min (Council)
+
+**Les 5 Advisors :**
+• The Contrarian : Cherche les failles et points de rupture
+• First Principles Thinker : Vérifie si vous posez la bonne question
+• The Expansionist : Détecte les opportunités manquées
+• The Outsider : Révèle la "curse of knowledge" (jargon opaque)
+• The Executor : Évalue l'exécutabilité réelle ("utilisable lundi ?")
+
+## Quand l'Utiliser ?
+
+✅ Production critique (security, compliance, legal)
+✅ Auto-critique < 3/5
+✅ Premier prompt d'un domaine complexe
+✅ Impact business élevé
+
+❌ Expérimental/interne
+❌ Budget/temps contraint
+
+## Documentation
+
+📘 Architecture complète : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/COUNCIL_INTEGRATION.md
+📄 Changelog v3.1 : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/CHANGELOG_v3.1.md
+📊 Test scoring crédit : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor/blob/main/council-report-20260512-175851.html
+🚀 Skill Claude Code : /promptor-council
+
+Repo GitHub : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor
+
+Je cherche des retours sur l'architecture, les cas d'usage, et la roadmap v3.2 (modes LIGHT/FAST, advisors spécialisés, métriques).
+
+Feedback bienvenu ! 🙏
+
+#PromptEngineering #AI #LLM #MachineLearning #Security #Compliance
+```
+
+#### Version v3.0 (Base Council)
+
 ```
 🎉 Annonce : Promptor v3 Council Edition
 
@@ -344,7 +429,7 @@ Un prompt de modération pour forums communautaires a été audité :
 
 Repo GitHub : https://github.com/valorisa/18-Hacks-Qwen3.6-plus-Super-Promptor
 
-Je cherche des retours sur l'architecture, les cas d'usage, et la priorisation de la roadmap v3.1 (modes allégés, advisors spécialisés, métriques).
+Je cherche des retours sur l'architecture, les cas d'usage, et la priorisation de la roadmap v3.2 (modes allégés, advisors spécialisés, métriques).
 
 Feedback bienvenu ! 🙏
 
