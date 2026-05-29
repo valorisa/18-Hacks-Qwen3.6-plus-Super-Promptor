@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Council Report — Scoring Crédit Bancaire</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 { font-size: 2rem; margin-bottom: 0.5rem; color: #000; }
+        h2 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+            color: #222;
+        }
+        h3 { font-size: 1.2rem; margin: 1.5rem 0 0.5rem; color: #444; }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        .header h1 { color: white; }
+        .meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .meta span { display: flex; align-items: center; gap: 0.5rem; }
+
+        .verdict-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .convergence { border-left-color: #28a745; background: #f1f9f3; }
+        .divergence { border-left-color: #ffc107; background: #fffbf0; }
+        .blind-spots { border-left-color: #dc3545; background: #fff5f5; }
+        .recommendation { border-left-color: #17a2b8; background: #f0f8fa; }
+        .action { border-left-color: #fd7e14; background: #fff8f0; font-weight: 600; }
+
+        .advisor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .advisor-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 1rem;
+            background: #fafafa;
+        }
+        .advisor-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        .advisor-card p {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .matrix {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        .matrix table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .matrix th, .matrix td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .matrix th {
+            background: #e9ecef;
+            font-weight: 600;
+            color: #495057;
+        }
+        .matrix tr:hover { background: #fff; }
+
+        details {
+            margin: 1rem 0;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 1rem;
+            background: #fafafa;
+        }
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: #667eea;
+            user-select: none;
+        }
+        summary:hover { opacity: 0.8; }
+        details[open] summary { margin-bottom: 1rem; }
+
+        .footer {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+            font-size: 0.85rem;
+            color: #666;
+            text-align: center;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e9ecef;
+            color: #495057;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+        }
+        .tag.critical { background: #dc3545; color: white; }
+        .tag.warning { background: #ffc107; color: #000; }
+
+        pre {
+            background: #f4f4f4;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        ul, ol { margin: 1rem 0; padding-left: 2rem; }
+        li { margin: 0.5rem 0; }
+
+        strong { color: #000; }
+        em { color: #667eea; font-style: normal; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏛️ LLM Council Report</h1>
+        <p style="font-size: 1.1rem; margin-top: 0.5rem;">Audit Multi-Perspective — Système de Scoring Crédit Bancaire</p>
+        <div class="meta">
+            <span>📅 2026-05-12 17:58:51</span>
+            <span>👥 5 Advisors + Peer Review</span>
+            <span>⚖️ Chairman Synthesis</span>
+        </div>
+    </div>
+
+    <section>
+        <h2>📋 Question Soumise</h2>
+        <div class="verdict-box">
+            <p><strong>"Ce prompt de scoring crédit bancaire est-il solide pour production ? Identifier faiblesses, angles morts et risques non détectés par l'auto-critique (2/5)."</strong></p>
+            <p style="margin-top: 1rem; font-size: 0.95rem;">
+                <span class="tag critical">Production critique</span>
+                <span class="tag warning">RGPD/Bâle III</span>
+                <span class="tag">Auto-critique 2/5</span>
+            </p>
+        </div>
+    </section>
+
+    <section>
+        <h2>⚖️ Verdict du Chairman</h2>
+
+        <h3>✅ Où le Council Converge</h3>
+        <div class="verdict-box convergence">
+            <p><strong>Consensus unanime : ce prompt n'est pas un système de production, c'est une spécification fonctionnelle.</strong></p>
+            <p>Les 5 advisors convergent sur le fait que le document audité est un cahier des charges propre, mais pas un système déployable. La confusion sémantique centrale : un prompt textuel ne peut ni garantir la reproductibilité algorithmique, ni implémenter la conformité RGPD, ni orchestrer les workflows opérationnels.</p>
+
+            <p style="margin-top: 1rem;"><strong>Accord fort : le fairness-washing textuel masque des corrélations non adressées.</strong></p>
+            <p>Trois advisors (Contrarian, First Principles, Outsider) identifient indépendamment que bannir "code postal" tout en autorisant "historique crédit" et "revenu" est du théâtre de conformité. Les variables interdites sont des symptômes ; les variables autorisées portent les mêmes signaux via corrélation.</p>
+
+            <p style="margin-top: 1rem;"><strong>Accord substantiel : l'EXAMEN MANUEL est un circuit ouvert.</strong></p>
+            <p>Quatre advisors pointent que déclencher <code>human_review_required: true</code> sans SLA, routing, formation des examinateurs, ni mécanisme de feedback est une fausse sécurité. Si 30-40% des dossiers tombent en manuel, le système ne scale pas.</p>
+        </div>
+
+        <h3>⚠️ Où le Council Diverge</h3>
+        <div class="verdict-box divergence">
+            <p><strong>Divergence majeure : faut-il rejeter l'architecture LLM-as-judge ou l'auditer pour ce qu'elle est ?</strong></p>
+            <ul>
+                <li><strong>Rejet total (Contrarian) :</strong> "Un LLM généraliste ne produira jamais des scores calibrés reproductibles sans entraînement supervisé. Les pondérations 40-25-20-15% sont arbitraires."</li>
+                <li><strong>Audit conditionnel (First Principles, Executor) :</strong> Ne rejettent pas l'approche LLM, mais exigent une couche d'orchestration robuste avec validation, monitoring, fallback.</li>
+            </ul>
+            <p style="margin-top: 1rem;"><em>Pourquoi ils divergent :</em> Contrarian évalue la validité statistique intrinsèque. Les autres évaluent la faisabilité opérationnelle conditionnelle.</p>
+
+            <p style="margin-top: 1.5rem;"><strong>Divergence secondaire : explicabilité juridique vs opérationnelle.</strong></p>
+            <ul>
+                <li><strong>Expansionist :</strong> Demande des contrefactuels actionnables ("Votre score passerait à ACCEPTATION si...")</li>
+                <li><strong>Outsider :</strong> Critique l'opacité du SHAP pour les demandeurs ("SHAP = -12 ne signifie rien")</li>
+                <li><strong>Executor :</strong> Focus sur traçabilité technique pour auditeurs (version, horodatage, ID décision)</li>
+            </ul>
+        </div>
+
+        <h3>🔍 Angles Morts Détectés</h3>
+        <div class="verdict-box blind-spots">
+            <p><strong>Via peer review uniquement — non identifiés même par l'auto-critique 2/5 :</strong></p>
+
+            <ol>
+                <li><strong>Surface d'attaque adversariale sur les explications</strong> — Si le système expose SHAP top-3, il donne aux emprunteurs un manuel d'optimisation gaming. Pas de mécanisme anti-fraude, pas de détection de patterns.</li>
+
+                <li><strong>Stratégie de sortie si LLM indisponible</strong> — Qu'arrive-t-il si l'API tombe en production ? Pas de mode dégradé spécifié. En finance, un fallback déterministe est obligatoire.</li>
+
+                <li><strong>Chaîne de responsabilité légale en cas d'erreur</strong> — Le prompt ne définit pas qui est responsable pénalement/civilement si le système discrimine illégalement. Bombe à retardement juridique.</li>
+
+                <li><strong>Testabilité et jeux de données de validation obligatoires</strong> — Aucun protocole de test pré-déploiement. Impossible de valider que les changements de prompt n'introduisent pas de régressions.</li>
+
+                <li><strong>Documentation forensique et plan de rollback</strong> — En cas d'audit BCE/ACPR, il faut reconstituer exactement pourquoi une décision a été prise. Le prompt ne spécifie pas de versioning immutable.</li>
+            </ol>
+
+            <p style="margin-top: 1rem;"><em>L'auto-critique avait identifié "biais non audité, dérive non gérée, appeal process sous-spécifié" mais a raté l'architecture adversariale, la dimension juridique/responsabilité, le testing réglementaire obligatoire, et la forensics strategy.</em></p>
+        </div>
+
+        <h3>💡 Recommandation Finale</h3>
+        <div class="verdict-box recommendation">
+            <p><strong>Verdict : Ce prompt est non déployable en production bancaire sans infrastructure d'accompagnement critique.</strong></p>
+            <p>Le document est une spécification fonctionnelle claire et bien structurée, mais il souffre d'une confusion catégorielle fatale : <strong>un prompt textuel ne constitue pas un système de décision conforme RGPD/Bâle III</strong>.</p>
+
+            <p style="margin-top: 1rem;">Les faiblesses identifiées ne sont pas des bugs à corriger dans le texte — elles révèlent l'absence de 60% de l'ingénierie nécessaire :</p>
+            <ol>
+                <li>Pipeline de validation des inputs avec détection de proxy variables</li>
+                <li>Couche d'orchestration système (API, gestion erreurs, latence SLA, fallback)</li>
+                <li>Workflow opérationnel d'escalade humaine (routing, formation, SLA, feedback loop)</li>
+                <li>Monitoring temporel continu (drift detection, PSI/CSI, circuit breakers)</li>
+                <li>Traçabilité forensique complète (versioning immutable, horodatage certifié, rollback)</li>
+                <li>Tests adversariaux obligatoires (gaming, proxy discrimination, edge cases)</li>
+                <li>Chaîne de responsabilité légale documentée et validée</li>
+            </ol>
+
+            <p style="margin-top: 1rem;"><strong>Niveau de risque actuel : <span class="tag critical">CRITIQUE</span></strong></p>
+            <p>Déployer ce système sans l'infrastructure manquante exposerait la banque à : non-conformité RGPD Article 22, discrimination indirecte, gaming adversarial, dérive non détectée, responsabilité pénale floue.</p>
+        </div>
+
+        <h3>🎯 Action Immédiate</h3>
+        <div class="verdict-box action">
+            <p><strong>Construire un environnement de test adversarial avec 500 dossiers synthétiques couvrant les 8 cas limites + 20 scénarios de gaming + 10 proxies discriminatoires cachés, puis mesurer si le système actuel produit des décisions reproductibles à 3 exécutions indépendantes.</strong></p>
+
+            <p style="margin-top: 1rem; font-weight: normal;"><em>Pourquoi cette action en premier :</em></p>
+            <p style="font-weight: normal;">Sans validation empirique de reproductibilité et robustesse adversariale, toute discussion sur déploiement est prématurée. Ce test révélera immédiatement si l'architecture LLM-as-judge est viable ou si elle doit être abandonnée au profit d'un modèle entraîné supervisé. Il exposera aussi les vrais taux d'escalade manuelle (si > 30%, le système ne scale pas).</p>
+
+            <p style="margin-top: 1rem; font-weight: normal;"><strong>Ne pas itérer sur le texte du prompt. Ne pas auditer la conformité. Ne pas architecturer l'orchestration. Tester d'abord si le cœur du système fonctionne. Tout le reste dépend de cette réponse.</strong></p>
+        </div>
+    </section>
+
+    <section>
+        <h2>👥 Matrice Agreement/Disagreement des Advisors</h2>
+        <div class="matrix">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Thème</th>
+                        <th>Agreement</th>
+                        <th>Divergence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Nature du document</strong></td>
+                        <td>✅ Tous : "Spécification fonctionnelle, pas système production"</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fairness variables</strong></td>
+                        <td>✅ Contrarian, First Principles, Outsider : "Fairness-washing textuel"</td>
+                        <td>Expansionist & Executor : focus autres failles</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EXAMEN MANUEL</strong></td>
+                        <td>✅ 4/5 : "Circuit ouvert, SLA manquants"</td>
+                        <td>Outsider : focus UX, pas gouvernance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Architecture LLM</strong></td>
+                        <td>—</td>
+                        <td>❌ Contrarian : rejet total | First Principles, Executor : conditionnel</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Explicabilité</strong></td>
+                        <td>✅ Tous : "SHAP insuffisant"</td>
+                        <td>❌ Expansionist (contrefactuels) vs Outsider (plain-language) vs Executor (traçabilité)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Dérive temporelle</strong></td>
+                        <td>✅ Contrarian, Expansionist, Executor : "Monitoring absent"</td>
+                        <td>First Principles, Outsider : focus autres dimensions</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section>
+        <h2>📊 Réponses Complètes des 5 Advisors</h2>
+
+        <details>
+            <summary>The Contrarian — Cherche les failles et points de rupture</summary>
+            <div class="advisor-card">
+                <p><strong>Faille majeure : le prompt confond spécification ML et guideline décisionnelle.</strong></p>
+                <p>Le système présume qu'un LLM généraliste produira des scores calibrés reproductibles (0-100) sans entraînement supervisé. <strong>C'est faux.</strong> Un prompt ne peut pas remplacer un modèle FICO/XGBoost/LightGBM entraîné sur historique defaults avec validation AUC. Les pondérations (40-25-20-15%) sont arbitraires, non dérivées de données. Le terme "SHAP" est trompeur : SHAP nécessite un arbre de décision ou réseau neuronal, pas un prompt texte.</p>
+
+                <p style="margin-top: 1rem;"><strong>Angle mort réglementaire :</strong> l'Article 22 RGPD exige une décision humaine possible, mais le prompt ne spécifie ni SLA, ni workflow d'escalade, ni formation des examinateurs. Que se passe-t-il si 40% des dossiers tombent en EXAMEN MANUEL ? Le système s'effondre.</p>
+
+                <p style="margin-top: 1rem;"><strong>Risque non couvert : adversarial gaming.</strong> Si les emprunteurs découvrent les seuils (taux effort 35%, incidents paiement), ils manipulent les inputs. Aucun mécanisme anti-fraude n'est mentionné.</p>
+
+                <p style="margin-top: 1rem;"><strong>Verdict :</strong> ce prompt est une documentation fonctionnelle, pas un système production-ready. Il manque architecture technique, pipeline données, monitoring, fallback.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>The First Principles Thinker — Vérifie si c'est la bonne question</summary>
+            <div class="advisor-card">
+                <p><strong>La question n'est pas la bonne.</strong> On audit un artefact textuel alors qu'on devrait auditer un système de décision en production. Un prompt n'est pas un système — c'est une instruction pour un composant d'un système.</p>
+
+                <p style="margin-top: 1rem;"><strong>Problème fondamental : confusion couche sémantique / couche opérationnelle.</strong> Le prompt spécifie "variables interdites : âge, genre, origine" mais ne peut pas <em>empêcher</em> qu'elles soient corrélées dans les données d'entrée réelles. C'est du fairness-washing textuel.</p>
+
+                <p style="margin-top: 1rem;"><strong>Assumptions implicites non challengées :</strong></p>
+                <ul>
+                    <li>Qui calcule le score composite ? Si c'est un LLM qui fait l'arithmétique, il n'y a aucune garantie de reproductibilité.</li>
+                    <li>SHAP top-3 — qui exécute SHAP ? Un LLM ne peut pas calculer de vraies valeurs de Shapley.</li>
+                    <li>"Conformité RGPD Article 22" — un prompt ne rend pas un système conforme. L'Article 22 exige intervention humaine <em>effective</em>.</li>
+                </ul>
+
+                <p style="margin-top: 1rem;"><strong>Bottom line :</strong> Ce prompt est un cahier des charges propre, pas un système de production. Auditer sa "solidité" revient à auditer un blueprint d'avion sans tester l'avion.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>The Expansionist — Détecte opportunités manquées</summary>
+            <div class="advisor-card">
+                <p><strong>Ce prompt rate trois leviers de robustesse critique pour un système production-ready.</strong></p>
+
+                <p style="margin-top: 1rem;"><strong>1. Monitoring temporel quasi-absent</strong> — Où sont les métriques de santé du modèle ? Distribution shift tracking, stability metrics (PSI/CSI), rolling performance windows. Suggère d'intégrer dans l'output JSON des flags : <code>drift_detected</code>, <code>model_confidence_degraded</code>, <code>recalibration_due</code>.</p>
+
+                <p style="margin-top: 1rem;"><strong>2. Explicabilité juridiquement insuffisante</strong> — SHAP top-3 + adverse action codes, c'est le minimum syndical. Mais face à un recours client ou audit BCE : où sont les <strong>contrefactuels actionnables</strong> ? "Votre score passerait à ACCEPTATION si ratio d'endettement descendait sous 28% ET si vous ajoutiez un co-emprunteur."</p>
+
+                <p style="margin-top: 1rem;"><strong>3. Gouvernance des cas limites sous-exploitée</strong> — 8 scénarios → EXAMEN MANUEL, ok. Mais aucune prioritisation d'urgence, aucune metadata pour router intelligemment (junior analyst vs senior vs comité). Enrichir l'output avec <code>manual_review_priority</code> + <code>recommended_reviewer_profile</code> optimiserait drastiquement les SLA.</p>
+
+                <p style="margin-top: 1rem;"><strong>Opportunité manquée massive :</strong> Ce système pourrait devenir auto-apprenant supervisé en trackant les décisions humaines post-EXAMEN MANUEL pour affiner les seuils. Le prompt ne mentionne aucune boucle de feedback structurée.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>The Outsider — Détecte la curse of knowledge</summary>
+            <div class="advisor-card">
+                <p><strong>I don't know banking, ML, or RGPD. Reading this with fresh eyes, here's what doesn't make sense:</strong></p>
+
+                <p style="margin-top: 1rem;"><strong>1. "Score composite 0-100" — what is it actually measuring?</strong> The prompt says "40-25-20-15%" but <em>of what</em>? Four mystery ingredients with no definition. A non-expert auditor can't verify if the weights make sense. This is pure black-box.</p>
+
+                <p style="margin-top: 1rem;"><strong>2. "Variables interdites: code postal"</strong> — Why is zip code banned but "historique crédit" allowed? If credit history correlates with geography (redlining proxy), you just banned the symptom but kept the cause.</p>
+
+                <p style="margin-top: 1rem;"><strong>3. "EXAMEN MANUEL automatique" for 8 edge cases</strong> — What happens during manual review? Who does it? With what training? If the system flags 30% of applications, is this even automating anything?</p>
+
+                <p style="margin-top: 1rem;"><strong>4. "SHAP top-3" explanation</strong> — SHAP means nothing to a loan applicant. "Your SHAP value for Variable_X is -12" won't help them understand why they were denied.</p>
+
+                <p style="margin-top: 1rem;"><strong>5. Missing: What happens when the model is wrong?</strong> Zero mention of monitoring, audit trails, or correction mechanisms.</p>
+
+                <p style="margin-top: 1rem;"><strong>The prompt optimizes for <em>looking</em> compliant (RGPD checkboxes, SHAP math) but I see no evidence a non-technical stakeholder could actually understand or challenge a decision.</strong></p>
+            </div>
+        </details>
+
+        <details>
+            <summary>The Executor — Évalue l'exécutabilité réelle</summary>
+            <div class="advisor-card">
+                <p><strong>Bloqueurs de Production Identifiés</strong></p>
+
+                <p style="margin-top: 1rem;"><strong>Défaut critique n°1 : Absence de workflow d'intégration système</strong> — Le prompt ne spécifie aucun protocole de communication avec les systèmes amont/aval. Pas de format d'entrée standardisé (API REST ? Batch CSV ?), pas de gestion des erreurs, pas de fallback si le LLM ne renvoie pas un JSON valide, pas de SLA de latence.</p>
+
+                <p style="margin-top: 1rem;"><strong>Défaut critique n°2 : Validation humaine non opérationnelle</strong> — Les 8 cas limites déclenchent "EXAMEN MANUEL" mais le prompt ne définit pas à qui router, avec quel contexte, dans quel délai, comment enregistrer la décision finale.</p>
+
+                <p style="margin-top: 1rem;"><strong>Défaut critique n°3 : Auditabilité technique insuffisante</strong> — La conformité RGPD Article 22 exige un droit d'opposition/recours. Le prompt produit un JSON mais pas de traçabilité de version du modèle, pas d'horodatage certifié, pas d'identifiant unique de décision.</p>
+
+                <p style="margin-top: 1rem;"><strong>Défaut critique n°4 : Dérive temporelle non gérée</strong> — Le prompt ne mentionne aucun mécanisme de détection de drift. En production, il faut alertes, re-calibration automatique, circuit breaker si taux d'EXAMEN MANUEL dépasse 30%.</p>
+
+                <p style="margin-top: 1rem;"><strong>Verdict : Non déployable sans couche d'orchestration.</strong> Le prompt génère du contenu correct, mais n'est pas un système. Il manque 60% de l'ingénierie nécessaire.</p>
+            </div>
+        </details>
+    </section>
+
+    <section>
+        <h2>🔬 Highlights Peer Review</h2>
+        <div class="advisor-grid">
+            <div class="advisor-card">
+                <h4>Reviewer 1</h4>
+                <p><strong>Plus forte :</strong> Executor (bloqueurs opérationnels concrets)</p>
+                <p><strong>Angle mort :</strong> Contrarian (rejette LLM-as-judge au lieu d'auditer ses risques)</p>
+                <p><strong>Manqué par tous :</strong> Surface d'attaque adversariale sur les explications (SHAP = mode d'emploi gaming)</p>
+            </div>
+
+            <div class="advisor-card">
+                <h4>Reviewer 2</h4>
+                <p><strong>Plus forte :</strong> First Principles (fairness-washing, assumptions implicites)</p>
+                <p><strong>Angle mort :</strong> Outsider (ignore gouvernance organisationnelle)</p>
+                <p><strong>Manqué par tous :</strong> Responsabilité légale en cas d'erreur, stratégie de sortie si LLM indisponible, coût réel</p>
+            </div>
+
+            <div class="advisor-card">
+                <h4>Reviewer 3</h4>
+                <p><strong>Plus forte :</strong> First Principles (critique architecturale fondamentale)</p>
+                <p><strong>Angle mort :</strong> Outsider (reste niveau checklist sans voir gouvernance)</p>
+                <p><strong>Manqué par tous :</strong> Test de charge adversarial, sunset clause, responsabilité pénale, interopérabilité multi-juridictions</p>
+            </div>
+
+            <div class="advisor-card">
+                <h4>Reviewer 4</h4>
+                <p><strong>Plus forte :</strong> First Principles (métastructure, assumptions bombes à retardement)</p>
+                <p><strong>Angle mort :</strong> Outsider (ignore dimension organisationnelle/réglementaire)</p>
+                <p><strong>Manqué par tous :</strong> Testabilité et jeux de données validation, métriques régression, plan rollback</p>
+            </div>
+
+            <div class="advisor-card">
+                <h4>Reviewer 5</h4>
+                <p><strong>Plus forte :</strong> First Principles (recadre débat, fairness-washing, validité du cadre)</p>
+                <p><strong>Angle mort :</strong> Outsider (UX micro-tactique masque risque systémique)</p>
+                <p><strong>Manqué par tous :</strong> Threat model adversarial organisationnel, chaîne responsabilité légale, tests régression obligatoires, forensics</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <p><strong>Promptor v3 Council Edition</strong> — LLM Council Deliberation (méthodologie Karpathy)</p>
+        <p>Généré le 2026-05-12 à 17:58:51 | 5 Advisors + 5 Peer Reviews + Chairman Synthesis</p>
+        <p>Temps total : ~3 minutes | Coût relatif : ~11x vs auto-critique seule</p>
+        <p style="margin-top: 1rem; font-size: 0.8rem;">Ce rapport est confidentiel. Distribution limitée aux parties prenantes autorisées.</p>
+    </div>
+</body>
+</html>
